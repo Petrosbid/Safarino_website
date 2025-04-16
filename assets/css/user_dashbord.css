@@ -1,0 +1,377 @@
+@font-face {
+	font-family: 'mahoor';
+	src: url('../fonts/Mahoor.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+:root {
+    --primary-color: #5C88C4;
+    --secondary-color: #5C88C4;
+    --accent-color: #e8e476;
+    --text-color: #000000;
+    --light-gray: #f5f5f5;
+    --white: #ffffff;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--light-gray);
+    direction: rtl;
+}
+
+main {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Navigation Styles */
+.main-menu {
+    width: 280px;
+    background: var(--white);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    position: fixed;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.main-menu h1 {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    display: block;
+    border-radius: 50%;
+}
+
+.nav-item {
+    position: relative;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover a {
+    background: var(--light-gray);
+    transform: translateX(-5px);
+}
+
+.nav-item.active a {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.nav-icon {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Content Styles */
+.content {
+    margin-right: 280px;
+    padding: 2rem;
+    width: calc(100% - 280px);
+    display: flex;
+    gap: 2rem;
+}
+
+.right-content {
+    width: 30%;
+}
+
+.left-content {
+    width: 70%;
+}
+
+/* User Info Styles */
+.user-info {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 1rem;
+}
+
+.icon-container {
+    margin-right: auto;
+}
+
+.icon-container i {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.icon-container i:hover {
+    color: var(--primary-color);
+}
+
+/* Quick Stats Styles */
+.quick-stats {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-box {
+    text-align: center;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+}
+
+.stat-box i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Upcoming Trips Styles */
+.upcoming-trips {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.trip-cards {
+    margin-top: 1rem;
+}
+
+.trip-card {
+    background: var(--light-gray);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.trip-card:hover {
+    transform: translateX(-5px);
+}
+
+.trip-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.trip-info {
+    padding: 1rem;
+}
+
+.trip-status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    background: var(--primary-color);
+    color: var(--white);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.trip-status.pending {
+    background: var(--accent-color);
+}
+
+/* Popular Destinations Styles */
+.popular-destinations {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.destination-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.destination-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.destination-card:hover img {
+    transform: scale(1.1);
+}
+
+.destination-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: var(--white);
+}
+
+/* Travel Tips Styles */
+.travel-tips {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.tips-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tip-card {
+    background: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+}
+
+.tip-card i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content > * {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content {
+        flex-direction: column;
+    }
+    
+    .right-content,
+    .left-content {
+        width: 100%;
+    }
+    
+    .destination-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tips-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-menu {
+        width: 70px;
+        padding: 1rem;
+    }
+    
+    .main-menu h1,
+    .nav-text {
+        display: none;
+    }
+    
+    .content {
+        margin-right: 70px;
+        width: calc(100% - 70px);
+    }
+    
+    .destination-grid,
+    .tips-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tab Animation */
+.tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}

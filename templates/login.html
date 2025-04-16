@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <div class="balloon">
+        <div class="envelope"></div>
+        <div class="basket"></div>
+    </div>
+
+    <div class="error-container">
+        {% if notfound != "" %}
+            <div class="error-message">
+                        <p>{{ notfound }}</p>
+            </div>
+        {% endif %}
+        {% if register_form.errors %}
+            <div class="error-message">
+                {% for field, errors in register_form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form method="post">
+                    {% csrf_token %}
+                        <label id="signup" for="chk" aria-hidden="true">ثبت نام</label>
+                            {{ register_form }}
+                        <button name="action" value="register">ثبت نام</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form method="post">
+                    {% csrf_token %}
+                        <label for="chk" aria-hidden="true">ورود</label>
+                           {{ login_form }}
+                        <button  name="action" value="login_btn">ورود</button>
+				</form>
+			</div>
+	</div>
+</body>
+</html> 

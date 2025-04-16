@@ -1,0 +1,227 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>پنل کاربری سفرهای من</title>
+        <link rel="stylesheet" href="{% static 'css/user_dashbord.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+         <script
+          src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+          type="module"
+        ></script>
+    </head>
+    <body>
+        <main>
+            <nav class="main-menu">
+                <h1>سفرهای من</h1>
+                <img class="logo" src="https://placehold.co/100x100" alt="لوگو" />
+                <ul>
+                    <li class="nav-item active" data-tab="home">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/jeuxydnh.json"
+                                trigger="hover"
+                                colors="primary:#5c2fc2,secondary:#6FDCE3"
+                                style="width:30px;height:30px">
+                            </lord-icon>
+                            <span class="nav-text">خانه</span>
+                        </a>
+                    </li>
+    
+                    <li class="nav-item" data-tab="trips">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/vmkushle.json"
+                                trigger="hover"
+                                colors="primary:#5c2fc2,secondary:#6FDCE3"
+                                style="width:30px;height:30px">
+                            </lord-icon>
+                            <span class="nav-text">سفرهای من</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" data-tab="bookings">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/uphbloed.json"
+                                trigger="hover"
+                                colors="primary:#5c2fc2,secondary:#6FDCE3"
+                                style="width:30px;height:30px">
+                            </lord-icon>
+                            <span class="nav-text">رزروها</span>
+                        </a>
+                    </li>
+    
+                    <li class="nav-item" data-tab="wishlist">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/aydxrkfl.json"
+                                trigger="hover"
+                                colors="primary:#5c2fc2,secondary:#6FDCE3"
+                                style="width:30px;height:30px">
+                            </lord-icon>
+                            <span class="nav-text">علاقه‌مندی‌ها</span>
+                        </a>
+                    </li>
+    
+                    <li class="nav-item" data-tab="settings">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <dotlottie-player
+                              src="{% static 'emojis/HXprzO571x.lottie' %}"
+                              background="transparent"
+                              speed="1"
+                              style="width: 30px; height: 30px"
+                              loop
+                              hover
+                            ></dotlottie-player>
+                            <span class="nav-text">تنظیمات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+    
+            <section class="content">
+                <div class="right-content">
+                    <div class="user-info">
+                        <div class="icon-container">
+                            <i class="fas fa-bell nav-icon"></i>
+                            <i class="fas fa-envelope nav-icon"></i>
+                        </div>
+                        <h4>کاربر گرامی</h4>
+                        <img src="https://placehold.co/100x100" alt="پروفایل کاربر" />
+                    </div>
+
+                    <div class="quick-stats">
+                        <h2>آمار سفرهای شما</h2>
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/rpviwvwn.json"
+                                    trigger="hover"
+                                    colors="primary:#5c2fc2,secondary:#5c88c4"
+                                    style="width:40px;height:40px">
+                                </lord-icon>
+                                <h3>۱۲</h3>
+                                <p>سفر انجام شده</p>
+                            </div>
+                            <div class="stat-box">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/onmwuuox.json"
+                                    trigger="hover"
+                                    colors="primary:#5c2fc2,secondary:#5c88c4"
+                                    style="width:40px;height:40px">
+                                </lord-icon>
+                                <h3>۸</h3>
+                                <p>مقصد جدید</p>
+                            </div>
+                            <div class="stat-box">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/cvwrvyjv.json"
+                                    trigger="hover"
+                                    colors="primary:#5c2fc2,secondary:#5c88c4"
+                                    style="width:40px;height:40px">
+                                </lord-icon>
+                                <h3>۱۵</h3>
+                                <p>نظر ثبت شده</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="upcoming-trips">
+                        <h2>سفرهای پیش رو</h2>
+                        <div class="trip-cards">
+                            <div class="trip-card">
+                                <img src="https://placehold.co/300x200" alt="تهران">
+                                <div class="trip-info">
+                                    <h3>تهران</h3>
+                                    <p>۱۵ تا ۲۰ فروردین</p>
+                                    <div class="trip-status">تایید شده</div>
+                                </div>
+                            </div>
+                            <div class="trip-card">
+                                <img src="https://placehold.co/300x200" alt="شیراز">
+                                <div class="trip-info">
+                                    <h3>شیراز</h3>
+                                    <p>۱ تا ۵ اردیبهشت</p>
+                                    <div class="trip-status pending">در انتظار تایید</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="left-content">
+                    <div class="popular-destinations">
+                        <h2>مقاصد محبوب</h2>
+                        <div class="destination-grid">
+                            <div class="destination-card">
+                                <img src="https://placehold.co/300x200" alt="اصفهان">
+                                <div class="destination-overlay">
+                                    <h3>اصفهان</h3>
+                                    <p>از ۲,۵۰۰,۰۰۰ تومان</p>
+                                </div>
+                            </div>
+                            <div class="destination-card">
+                                <img src="https://placehold.co/300x200" alt="یزد">
+                                <div class="destination-overlay">
+                                    <h3>یزد</h3>
+                                    <p>از ۱,۸۰۰,۰۰۰ تومان</p>
+                                </div>
+                            </div>
+                            <div class="destination-card">
+                                <img src="https://placehold.co/300x200" alt="کیش">
+                                <div class="destination-overlay">
+                                    <h3>کیش</h3>
+                                    <p>از ۳,۲۰۰,۰۰۰ تومان</p>
+                                </div>
+                            </div>
+                            <div class="destination-card">
+                                <img src="https://placehold.co/300x200" alt="مشهد">
+                                <div class="destination-overlay">
+                                    <h3>مشهد</h3>
+                                    <p>از ۲,۹۰۰,۰۰۰ تومان</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="travel-tips">
+                        <h2>نکات سفر</h2>
+                        <div class="tips-container">
+                            <div class="tip-card">
+                                <i class="fas fa-passport"></i>
+                                <h3>چک‌لیست سفر</h3>
+                                <p>لیست کامل وسایل مورد نیاز برای سفر</p>
+                            </div>
+                            <div class="tip-card">
+                                <i class="fas fa-umbrella-beach"></i>
+                                <h3>بهترین فصل سفر</h3>
+                                <p>راهنمای انتخاب زمان مناسب سفر</p>
+                            </div>
+                            <div class="tip-card">
+                                <i class="fas fa-wallet"></i>
+                                <h3>مدیریت هزینه</h3>
+                                <p>نکات مهم برای مدیریت بودجه سفر</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script src="{% static 'javascript/user_dashbord.js' %}"></script>
+    </body>
+</html>
