@@ -51,6 +51,3 @@ def auth(request):
         'notfound' : notfound
     }
     return render(request, "login.html", context)
-def blog(request):
-    context = {}
-    return render(request, "blog.html", context)

@@ -1,69 +1,13 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // Tab switching functionality
-    const navItems = document.querySelectorAll('.nav-item');
-    const tabContents = document.querySelectorAll('.tab-content');
+    // Javascript for the new dashboard can be added here.
+    // For example, handling calendar navigation, adding tasks/events, etc.
 
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all nav items
-            navItems.forEach(nav => nav.classList.remove('active'));
-            
-            // Add active class to clicked nav item
-            this.classList.add('active');
-            
-            // Get the tab id from data-tab attribute
-            const tabId = this.getAttribute('data-tab');
-            
-            // Hide all tab contents
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Show the selected tab content with animation
-            const selectedTab = document.getElementById(tabId);
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
-        });
-    });
+    // The old tab switching logic has been removed as it's not used in the new design.
 
-    // Add hover effects to destination cards
-    const destinationCards = document.querySelectorAll('.destination-card');
-    destinationCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
+    // The old hover effect JS has also been removed, as basic hover
+    // effects can often be handled purely by CSS for better performance.
+    // If complex JS-based hover interactions are needed, they can be added here.
 
-    // Add hover effects to trip cards
-    const tripCards = document.querySelectorAll('.trip-card');
-    tripCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(-5px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0)';
-        });
-    });
+    console.log("Dashboard Initialized");
 
-    // Add hover effects to tip cards
-    const tipCards = document.querySelectorAll('.tip-card');
-    tipCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
 });

@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from Safarino.views import home_page , auth , user_dashboard , blog
+from Safarino.views import home_page , auth , user_dashboard
 
 urlpatterns = ([
     path('admin/', admin.site.urls),
     path('', home_page, name='home'),
     path('login' , auth , name='login'),
     path('dashboard' , user_dashboard , name='user_dashboard'),
-    path('blog' , blog , name='blog'),#درست بشه
+    path('blog' , include("blog.urls") , name='blog'),#درست بشه
+    path('ckeditor/', include('ckeditor_uploader.urls')), # اضافه کردن مسیر برای ckeditor
+    path('' , include('blog.urls') , name='blog'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-  + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT))
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)) # اصلاح مسیر برای media files

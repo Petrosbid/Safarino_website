@@ -1,10 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وبلاگ سفر - کشف مقاصد شگفت‌انگیز</title>
-    <link rel="stylesheet" href="blog.css">
+    <title>{{ post. }}</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -12,7 +14,7 @@
     <main class="blog-container">
         <article class="blog-post">
             <div class="blog-header">
-                <h1>کشف گنجینه‌های پنهان پاریس</h1>
+                    <h1>{{ post.title }}</h1>
                 <div class="blog-meta">
                     <span class="author"><i class="fas fa-user"></i> جان دو</span>
                     <span class="date"><i class="far fa-calendar"></i> ۱۵ مارس ۲۰۲۴</span>
@@ -135,6 +137,6 @@
         </aside>
     </main>
 
-    <script src="blog.js"></script>
+    <script src="{% static 'javascript/blog.js' %}"></script>
 </body>
 </html>

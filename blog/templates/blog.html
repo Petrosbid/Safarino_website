@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>وبلاگ</title>
+</head>
+<body>
+<h1>وبلاگ سایت</h1>
+<!-- Debug information -->
+<p>Number of posts: {{ blog_list|length }}</p>
+{% if blog_list %}
+    {% for post in blog_list %}
+        <h2>{{ post.title }}</h2>
+        <h3>{{ post.city }}</h3>
+        <a href="/blog/{{ post.id }}">بیشتر بخوانید...</a>
+    {% endfor %}
+{% else %}
+    <p>No posts available.</p>
+{% endif %}
+</body>
+</html>

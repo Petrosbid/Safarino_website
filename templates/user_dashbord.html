@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>پنل کاربری سفرهای من</title>
+        <title>داشبورد سفر</title>
         <link rel="stylesheet" href="{% static 'css/user_dashbord.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -15,213 +15,251 @@
         ></script>
     </head>
     <body>
-        <main>
-            <nav class="main-menu">
-                <h1>سفرهای من</h1>
-                <img class="logo" src="https://placehold.co/100x100" alt="لوگو" />
-                <ul>
-                    <li class="nav-item active" data-tab="home">
-                        <b></b>
-                        <b></b>
-                        <a href="#">
-                            <lord-icon
-                                src="https://cdn.lordicon.com/jeuxydnh.json"
-                                trigger="hover"
-                                colors="primary:#5c2fc2,secondary:#6FDCE3"
-                                style="width:30px;height:30px">
-                            </lord-icon>
-                            <span class="nav-text">خانه</span>
-                        </a>
-                    </li>
-    
-                    <li class="nav-item" data-tab="trips">
-                        <b></b>
-                        <b></b>
-                        <a href="#">
-                            <lord-icon
-                                src="https://cdn.lordicon.com/vmkushle.json"
-                                trigger="hover"
-                                colors="primary:#5c2fc2,secondary:#6FDCE3"
-                                style="width:30px;height:30px">
-                            </lord-icon>
-                            <span class="nav-text">سفرهای من</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" data-tab="bookings">
-                        <b></b>
-                        <b></b>
-                        <a href="#">
-                            <lord-icon
-                                src="https://cdn.lordicon.com/uphbloed.json"
-                                trigger="hover"
-                                colors="primary:#5c2fc2,secondary:#6FDCE3"
-                                style="width:30px;height:30px">
-                            </lord-icon>
-                            <span class="nav-text">رزروها</span>
-                        </a>
-                    </li>
-    
-                    <li class="nav-item" data-tab="wishlist">
-                        <b></b>
-                        <b></b>
-                        <a href="#">
-                            <lord-icon
-                                src="https://cdn.lordicon.com/aydxrkfl.json"
-                                trigger="hover"
-                                colors="primary:#5c2fc2,secondary:#6FDCE3"
-                                style="width:30px;height:30px">
-                            </lord-icon>
-                            <span class="nav-text">علاقه‌مندی‌ها</span>
-                        </a>
-                    </li>
-    
-                    <li class="nav-item" data-tab="settings">
-                        <b></b>
-                        <b></b>
-                        <a href="#">
-                            <dotlottie-player
-                              src="{% static 'emojis/HXprzO571x.lottie' %}"
-                              background="transparent"
-                              speed="1"
-                              style="width: 30px; height: 30px"
-                              loop
-                              hover
-                            ></dotlottie-player>
-                            <span class="nav-text">تنظیمات</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-    
-            <section class="content">
-                <div class="right-content">
-                    <div class="user-info">
-                        <div class="icon-container">
-                            <i class="fas fa-bell nav-icon"></i>
-                            <i class="fas fa-envelope nav-icon"></i>
-                        </div>
-                        <h4>کاربر گرامی</h4>
-                        <img src="https://placehold.co/100x100" alt="پروفایل کاربر" />
-                    </div>
-
-                    <div class="quick-stats">
-                        <h2>آمار سفرهای شما</h2>
-                        <div class="stats-container">
-                            <div class="stat-box">
-                                <lord-icon
-                                    src="https://cdn.lordicon.com/rpviwvwn.json"
-                                    trigger="hover"
-                                    colors="primary:#5c2fc2,secondary:#5c88c4"
-                                    style="width:40px;height:40px">
-                                </lord-icon>
-                                <h3>۱۲</h3>
-                                <p>سفر انجام شده</p>
-                            </div>
-                            <div class="stat-box">
-                                <lord-icon
-                                    src="https://cdn.lordicon.com/onmwuuox.json"
-                                    trigger="hover"
-                                    colors="primary:#5c2fc2,secondary:#5c88c4"
-                                    style="width:40px;height:40px">
-                                </lord-icon>
-                                <h3>۸</h3>
-                                <p>مقصد جدید</p>
-                            </div>
-                            <div class="stat-box">
-                                <lord-icon
-                                    src="https://cdn.lordicon.com/cvwrvyjv.json"
-                                    trigger="hover"
-                                    colors="primary:#5c2fc2,secondary:#5c88c4"
-                                    style="width:40px;height:40px">
-                                </lord-icon>
-                                <h3>۱۵</h3>
-                                <p>نظر ثبت شده</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="upcoming-trips">
-                        <h2>سفرهای پیش رو</h2>
-                        <div class="trip-cards">
-                            <div class="trip-card">
-                                <img src="https://placehold.co/300x200" alt="تهران">
-                                <div class="trip-info">
-                                    <h3>تهران</h3>
-                                    <p>۱۵ تا ۲۰ فروردین</p>
-                                    <div class="trip-status">تایید شده</div>
-                                </div>
-                            </div>
-                            <div class="trip-card">
-                                <img src="https://placehold.co/300x200" alt="شیراز">
-                                <div class="trip-info">
-                                    <h3>شیراز</h3>
-                                    <p>۱ تا ۵ اردیبهشت</p>
-                                    <div class="trip-status pending">در انتظار تایید</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <div class="logo-container">
+                    <img src="https://placehold.co/40x40/FF5722/FFFFFF" alt="لوگو" class="logo-img"/>
+                    <span class="brand-name">سفرینو</span>
                 </div>
 
-                <div class="left-content">
-                    <div class="popular-destinations">
-                        <h2>مقاصد محبوب</h2>
-                        <div class="destination-grid">
-                            <div class="destination-card">
-                                <img src="https://placehold.co/300x200" alt="اصفهان">
-                                <div class="destination-overlay">
-                                    <h3>اصفهان</h3>
-                                    <p>از ۲,۵۰۰,۰۰۰ تومان</p>
+                <button class="new-trip-btn">
+                    سفر جدید +
+                </button>
+
+                <nav class="main-nav">
+                    <ul>
+                        <li class="nav-item active">
+                            <a href="#">
+                                <lord-icon
+                                    src="{% static 'emojis/jeuxydnh.json' %}"
+                                    trigger="hover"
+                                    colors="primary:#5c2fc2,secondary:#6FDCE3"
+                                    style="width:25px;height:25px; margin-left: 10px;">
+                                </lord-icon>
+                                <span class="nav-text">خانه</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <i class="fas fa-suitcase-rolling nav-icon"></i>
+                                <span class="nav-text">همه سفرها</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                 <lord-icon
+                                    src="{% static 'emojis/onmwuuox.json' %}"
+                                    trigger="hover"
+                                    colors="primary:#5c2fc2,secondary:#6FDCE3"
+                                    style="width:25px;height:25px; margin-left: 10px;">
+                                </lord-icon>
+                                <span class="nav-text">سفرها</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <i class="fas fa-bed nav-icon"></i>
+                                <span class="nav-text">اتاق‌ها</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <i class="fas fa-bus nav-icon"></i>
+                                <span class="nav-text">حمل و نقل</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">
+                                <i class="fas fa-landmark nav-icon"></i>
+                                <span class="nav-text">جاذبه‌ها</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-bottom">
+                    <div class="weather-widget">
+                        <div class="weather-icon">☀️</div>
+                        <div class="weather-info">
+                            <span class="temp">۳۰°</span>
+                            <span class="location">رم</span>
+                        </div>
+                        <div class="weather-forecast">
+                            <!-- Placeholder for forecast -->
+                            <span>Mon</span> <span>Tue</span> <span>Wed</span> <span>Thu</span> <span>Fri</span>
+                            <span>۳۱°</span> <span>۲۹°</span> <span>۳۳°</span> <span>۲۸°</span> <span>۳۲°</span>
+                        </div>
+                    </div>
+
+                    <div class="support-link">
+                        <a href="#">
+                            <i class="fas fa-question-circle nav-icon"></i>
+                            <span class="nav-text">پشتیبانی</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="main-header">
+                    <div class="header-left">
+                         <div class="travels-dropdown">
+                            <span>سفرها</span> <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="جستجو...">
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <i class="fas fa-flag"></i> <!-- Placeholder for flag -->
+                        <i class="fas fa-bell"></i>
+                        <div class="user-profile">
+                            <span>نیک مک‌میلان</span>
+                            <img src="https://placehold.co/40x40" alt="پروفایل کاربر" class="profile-img"/>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="content-area">
+                    <div class="content-left">
+                        <div class="top-section">
+                            <div class="card nearest-trip">
+                                <span class="card-subtitle">نزدیک‌ترین سفر</span>
+                                <div class="trip-location">
+                                    <h2>رم</h2>
+                                    <div class="trip-nav-arrows">
+                                        <button>&larr;</button>
+                                        <button>&rarr;</button>
+                                    </div>
+                                </div>
+                                <img src="https://placehold.co/400x150/FFC107/000000?text=Colosseum+Placeholder" alt="رم" class="trip-image"/>
+                            </div>
+                            <div class="card expenses">
+                                 <span class="card-subtitle">هزینه‌ها</span>
+                                 <div class="chart-placeholder">
+                                     <!-- Placeholder for Doughnut Chart -->
+                                     <div class="chart-segment" style="--percentage: 60; --color: #4CAF50;"><span>۶۰٪</span></div>
+                                     <div class="chart-segment" style="--percentage: 30; --color: #9C27B0;"><span>۳۰٪</span></div>
+                                     <div class="chart-segment" style="--percentage: 10; --color: #FF9800;"><span>۱۰٪</span></div>
+                                     <div class="chart-center"></div>
+                                 </div>
+                                 <div class="chart-legend">
+                                     <span><span class="legend-dot" style="background-color: #4CAF50;"></span> حمل و نقل</span>
+                                     <span><span class="legend-dot" style="background-color: #9C27B0;"></span> هتل</span>
+                                     <span><span class="legend-dot" style="background-color: #FF9800;"></span> سایر</span>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="middle-section">
+                            <div class="card travel-details">
+                                <span class="card-subtitle">تاریخ سفر</span>
+                                 <i class="fas fa-ellipsis-h card-options"></i>
+                                <h3>۵ روز</h3>
+                                <span>01.09.2021 &rarr; 05.09.2021</span>
+                            </div>
+                             <div class="card travel-details">
+                                <span class="card-subtitle">افراد</span>
+                                 <i class="fas fa-ellipsis-h card-options"></i>
+                                <h3>۲ بزرگسال</h3>
+                                <div class="people-avatars">
+                                   <img src="https://placehold.co/30x30" alt="Avatar 1"/>
+                                   <img src="https://placehold.co/30x30" alt="Avatar 2"/>
+                                   <button class="add-person-btn">+</button>
                                 </div>
                             </div>
-                            <div class="destination-card">
-                                <img src="https://placehold.co/300x200" alt="یزد">
-                                <div class="destination-overlay">
-                                    <h3>یزد</h3>
-                                    <p>از ۱,۸۰۰,۰۰۰ تومان</p>
-                                </div>
+                             <div class="card travel-details">
+                                <span class="card-subtitle">مقصد</span>
+                                 <i class="fas fa-ellipsis-h card-options"></i>
+                                <h3>رم</h3>
+                                 <span>لهستان <i class="fas fa-exchange-alt"></i> ایتالیا</span>
+                                 <span><i class="fas fa-plane"></i> ۲ ساعت و ۲۵ دقیقه پرواز</span>
                             </div>
-                            <div class="destination-card">
-                                <img src="https://placehold.co/300x200" alt="کیش">
-                                <div class="destination-overlay">
-                                    <h3>کیش</h3>
-                                    <p>از ۳,۲۰۰,۰۰۰ تومان</p>
-                                </div>
+                        </div>
+
+                        <div class="bottom-section">
+                            <div class="card map-container">
+                                 <img src="https://placehold.co/400x250/AED581/000000?text=Map+Placeholder" alt="نقشه رم" class="map-image"/>
                             </div>
-                            <div class="destination-card">
-                                <img src="https://placehold.co/300x200" alt="مشهد">
-                                <div class="destination-overlay">
-                                    <h3>مشهد</h3>
-                                    <p>از ۲,۹۰۰,۰۰۰ تومان</p>
-                                </div>
+                            <div class="card todos">
+                                 <div class="todos-header">
+                                     <h3>کارها</h3>
+                                     <span>مرتب‌سازی <i class="fas fa-sort-amount-down"></i></span>
+                                 </div>
+                                 <ul class="todo-list">
+                                     <li><span>۱</span> <input type="checkbox"> متن نمونه برای کار اول <span class="assignee">آرتور</span> <span class="priority medium">متوسط</span></li>
+                                     <li><span>۲</span> <input type="checkbox"> متن نمونه دوم با جزئیات بیشتر <span class="assignee"><img src="https://placehold.co/20x20" alt="Avatar"/></span> <span class="priority medium">متوسط</span></li>
+                                     <li><span>۳</span> <input type="checkbox"> کار سوم با توضیحات کافی <span class="assignee">آرتور</span> <span class="priority medium">متوسط</span></li>
+                                     <li><span>۴</span> <input type="checkbox"> یک کار دیگر با اولویت بالا <span class="assignee">مارتا</span> <span class="priority high">زیاد</span></li>
+                                 </ul>
+                                 <button class="add-task-btn">افزودن کار جدید +</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="travel-tips">
-                        <h2>نکات سفر</h2>
-                        <div class="tips-container">
-                            <div class="tip-card">
-                                <i class="fas fa-passport"></i>
-                                <h3>چک‌لیست سفر</h3>
-                                <p>لیست کامل وسایل مورد نیاز برای سفر</p>
+                    <aside class="content-right timeline-area">
+                        <div class="timeline-header">
+                             <h3>تایم‌لاین</h3>
+                             <button class="add-event-btn">افزودن رویداد +</button>
+                        </div>
+                        <div class="card calendar">
+                             <div class="calendar-header">
+                                <h4>سپتامبر</h4>
+                                <div class="calendar-nav">
+                                    <button>&lt;</button>
+                                    <button>&gt;</button>
+                                </div>
                             </div>
-                            <div class="tip-card">
-                                <i class="fas fa-umbrella-beach"></i>
-                                <h3>بهترین فصل سفر</h3>
-                                <p>راهنمای انتخاب زمان مناسب سفر</p>
-                            </div>
-                            <div class="tip-card">
-                                <i class="fas fa-wallet"></i>
-                                <h3>مدیریت هزینه</h3>
-                                <p>نکات مهم برای مدیریت بودجه سفر</p>
+                            <div class="calendar-grid">
+                                <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+                                <!-- Placeholder Dates -->
+                                <span></span><span></span><span>۱</span><span>۲</span><span>۳</span><span>۴</span><span>۵</span>
+                                <span>۶</span><span>۷</span><span>۸</span><span>۹</span><span>۱۰</span><span>۱۱</span><span>۱۲</span>
+                                <span>۱۳</span><span>۱۴</span><span>۱۵</span><span class="today">۱۶</span><span class="selected">۱۷</span><span>۱۸</span><span>۱۹</span>
+                                <span>۲۰</span><span>۲۱</span><span>۲۲</span><span class="has-event">۲۳</span><span>۲۴</span><span>۲۵</span><span>۲۶</span>
+                                <span>۲۷</span><span>۲۸</span><span>۲۹</span><span>۳۰</span><span>۳۱</span><span>۱</span><span>۲</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+                        <div class="timeline-events">
+                             <div class="timeline-item">
+                                 <span class="event-time">8:00</span>
+                                 <div class="event-card flight">
+                                     <i class="fas fa-plane event-icon"></i>
+                                     <div class="event-details">
+                                         <span>ورشو &rarr; رم</span>
+                                         <small>8:00 - 9:15</small>
+                                     </div>
+                                     <i class="fas fa-ellipsis-v event-options"></i>
+                                 </div>
+                             </div>
+                              <div class="timeline-item">
+                                 <span class="event-time">9:30</span>
+                                 <div class="event-card bus">
+                                     <i class="fas fa-bus event-icon"></i>
+                                     <div class="event-details">
+                                         <span>ترانسفر اتوبوس</span>
+                                         <small>9:30 - 10:00</small>
+                                     </div>
+                                     <i class="fas fa-ellipsis-v event-options"></i>
+                                 </div>
+                             </div>
+                              <div class="timeline-item">
+                                 <span class="event-time">10:00</span>
+                                 <div class="event-card hotel">
+                                     <i class="fas fa-concierge-bell event-icon"></i>
+                                     <div class="event-details">
+                                         <span>ورود به هتل</span>
+                                         <small>10:00 - 10:40</small>
+                                     </div>
+                                     <i class="fas fa-ellipsis-v event-options"></i>
+                                 </div>
+                             </div>
+                        </div>
+                    </aside>
+                </section>
+            </main>
+        </div>
         <script src="{% static 'javascript/user_dashbord.js' %}"></script>
     </body>
 </html>
