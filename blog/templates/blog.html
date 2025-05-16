@@ -1,23 +1,109 @@
 {% load static %}
+{% load extras %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>وبلاگ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTLST - مقالات و محتوا</title>
+    <link rel="stylesheet" href="{% static 'static_main/css/blog.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>وبلاگ سایت</h1>
-<!-- Debug information -->
-<p>Number of posts: {{ blog_list|length }}</p>
-{% if blog_list %}
-    {% for post in blog_list %}
-        <h2>{{ post.title }}</h2>
-        <h3>{{ post.city }}</h3>
-        <a href="/blog/{{ post.id }}">بیشتر بخوانید...</a>
-    {% endfor %}
-{% else %}
-    <p>No posts available.</p>
-{% endif %}
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="/"><i class="fa-regular fa-eye"></i> ARTLST</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'blog:show_post' %}" class="active">مقالات</a></li>
+                    <li><a href="#">موضوعات</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                    <li><a href="#">تماس</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="subscribe-btn">اشتراک</button>
+                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </header>
+
+        <main>
+            <div class="featured-posts">
+                {% if blog_list %}
+                    {% for post in blog_list|slice:":2" %}
+                        <div class="featured-post">
+                            <div class="post-image">
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                                {% else %}
+                                    <div class="placeholder-image"></div>
+                                {% endif %}
+                            </div>
+                            <div class="post-meta">
+                                <span class="category">{{ post.category|upper }}</span>
+                                <span class="separator">|</span>
+                                <span class="read-time">{{ post.content|read_time }} دقیقه مطالعه</span>
+                                <span class="separator">|</span>
+                                <span class="date">{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
+                            </div>
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <a href="/blog/{{ post.id }}" class="read-more">
+                                <span class="author-avatar">
+                                    {% if post.author.profile_image %}
+                                        <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.username }}">
+                                    {% else %}
+                                        <div class="avatar-placeholder"></div>
+                                    {% endif %}
+                                </span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="regular-posts">
+                {% if blog_list %}
+                    {% for post in blog_list|slice:"2:" %}
+                        <div class="regular-post">
+                            <div class="post-image">
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                                {% else %}
+                                    <div class="placeholder-image"></div>
+                                {% endif %}
+                            </div>
+                            <div class="post-meta">
+                                <span class="category">{{ post.category|upper }}</span>
+                                <span class="separator">|</span>
+                                <span class="read-time">{{ post.content|wordcount|divisibleby:200 }} دقیقه مطالعه</span>
+                                <span class="separator">|</span>
+                                <span class="date">{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
+                            </div>
+                            <h3 class="post-title">{{ post.title }}</h3>
+                            <a href="/blog/{{ post.id }}" class="read-more">
+                                <span class="author-avatar">
+                                    {% if post.author.profile_image %}
+                                        <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.username }}">
+                                    {% else %}
+                                        <div class="avatar-placeholder"></div>
+                                    {% endif %}
+                                </span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-posts">هیچ مقاله‌ای موجود نیست.</p>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+    <script src="{% static 'static_main/javascript/blog.js' %}"></script>
 </body>
 </html>

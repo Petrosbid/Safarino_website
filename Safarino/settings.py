@@ -133,13 +133,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
+# پوشه statics/static_main به عنوان محل فایل‌های استاتیک
 STATICFILES_DIRS = [
-    BASE_DIR / "assets",
+    os.path.join(BASE_DIR, "statics"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "statics", "static_main")
+# محل جمع‌آوری فایل‌های استاتیک
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = '/media/'
 
@@ -151,3 +153,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "statics", "media_root")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+        'versionCheck': False,
+    },
+}
+
+# Silence the CKEditor security warning
+SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']

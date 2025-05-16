@@ -25,8 +25,8 @@ urlpatterns = ([
     path('', home_page, name='home'),
     path('login' , auth , name='login'),
     path('dashboard' , user_dashboard , name='user_dashboard'),
-    path('blog' , include("blog.urls") , name='blog'),#درست بشه
+    path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
+    path('', include(('blog.urls', 'blog_root'), namespace='blog_root')),
     path('ckeditor/', include('ckeditor_uploader.urls')), # اضافه کردن مسیر برای ckeditor
-    path('' , include('blog.urls') , name='blog'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)) # اصلاح مسیر برای media files

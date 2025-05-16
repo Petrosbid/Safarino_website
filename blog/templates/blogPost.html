@@ -1,142 +1,159 @@
 {% load static %}
+{% load extras %}
 
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post. }}</title>
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>{{ post.0.title }} - ARTLST</title>
+    <link rel="stylesheet" href="{% static 'static_main/css/blogPost.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-    <main class="blog-container">
-        <article class="blog-post">
-            <div class="blog-header">
-                    <h1>{{ post.title }}</h1>
-                <div class="blog-meta">
-                    <span class="author"><i class="fas fa-user"></i> جان دو</span>
-                    <span class="date"><i class="far fa-calendar"></i> ۱۵ مارس ۲۰۲۴</span>
-                    <span class="reading-time"><i class="far fa-clock"></i> ۸ دقیقه مطالعه</span>
-                </div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="/"><i class="fa-regular fa-eye"></i> ARTLST</a>
             </div>
-
-            <div class="featured-image">
-                <img src="https://source.unsplash.com/random/1200x600/?paris" alt="نمای شهر پاریس">
-            </div>
-
-            <div class="table-of-contents">
-                <h2>فهرست مطالب</h2>
+            <nav>
                 <ul>
-                    <li><a href="#introduction">مقدمه</a></li>
-                    <li><a href="#best-time">بهترین زمان برای بازدید</a></li>
-                    <li><a href="#must-see">جاذبه‌های دیدنی</a></li>
-                    <li><a href="#hidden-gems">گنجینه‌های پنهان</a></li>
-                    <li><a href="#local-cuisine">غذای محلی</a></li>
-                    <li><a href="#travel-tips">نکات سفر</a></li>
+                    <li><a href="{% url 'blog:show_post' %}">مقالات</a></li>
+                    <li><a href="#">موضوعات</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                    <li><a href="#">تماس</a></li>
                 </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="subscribe-btn">اشتراک</button>
+                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
+        </header>
 
-            <div class="blog-content">
-                <section id="introduction">
-                    <h2>مقدمه</h2>
-                    <p>پاریس، شهر نور، چیزی فراتر از برج ایفل و موزه لوور است. در این راهنمای جامع، گوشه‌های کمتر شناخته شده این شهر باشکوه را کشف خواهیم کرد که سفر شما را به‌یادماندنی خواهد ساخت.</p>
-                    
-                    <div class="inline-image">
-                        <img src="https://source.unsplash.com/random/800x600/?paris-street" alt="خیابان‌های پاریس">
-                        <p class="caption">خیابان‌های سنگفرش شده پاریس، ترکیبی از تاریخ و مدرنیته</p>
+        <main class="post-content">
+            <article>
+                <div class="post-header">
+                    <div class="post-meta">
+                        <span class="category">{{ post.0.category|upper }}</span>
+                        <span class="separator">|</span>
+                        <span class="read-time">{{ post.content|read_time }} دقیقه مطالعه</span>
+                        <span class="separator">|</span>
+                        <span class="date">{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
+
                     </div>
-                </section>
-
-                <section id="best-time">
-                    <h2>بهترین زمان برای بازدید</h2>
-                    <p>در حالی که پاریس در تمام طول سال زیباست، بهترین زمان برای بازدید در بهار (آوریل تا ژوئن) و پاییز (سپتامبر تا نوامبر) است. هوا مطبوع است و جمعیت گردشگران کمتر از ماه‌های اوج تابستان است.</p>
-                    
-                    <div class="inline-image right">
-                        <img src="https://source.unsplash.com/random/600x400/?paris-spring" alt="پاریس در بهار">
-                        <p class="caption">پاریس در فصل بهار، زمانی که شکوفه‌های گیلاس درختان را تزئین می‌کنند</p>
-                    </div>
-                </section>
-
-                <section id="must-see">
-                    <h2>جاذبه‌های دیدنی</h2>
-                    <p>پاریس مملو از جاذبه‌های دیدنی است که هر کدام داستان خاص خود را دارند.</p>
-                    
-                    <div class="inline-image left">
-                        <img src="https://source.unsplash.com/random/600x400/?eiffel-tower" alt="برج ایفل">
-                        <p class="caption">برج ایفل، نماد جهانی پاریس</p>
-                    </div>
-                    
-                    <p>برج ایفل، این نماد جهانی پاریس، در سال ۱۸۸۹ ساخته شد و امروزه یکی از پربازدیدترین بناهای تاریخی جهان است. از بالای این برج، می‌توانید منظره‌ای خیره‌کننده از کل شهر را مشاهده کنید.</p>
-                </section>
-
-                <section id="hidden-gems">
-                    <h2>گنجینه‌های پنهان</h2>
-                    <p>این مکان‌های کمتر شناخته شده را کشف کنید که اکثر گردشگران از آن‌ها غافل می‌شوند:</p>
-                    <ul>
-                        <li>محله لو ماره</li>
-                        <li>پارک د بوت-شومون</li>
-                        <li>خیابان کرمو</li>
-                        <li>موزه شکار و طبیعت</li>
-                    </ul>
-                    
-                    <div class="inline-image">
-                        <img src="https://source.unsplash.com/random/800x600/?paris-hidden" alt="گنجینه‌های پنهان پاریس">
-                        <p class="caption">خیابان کرمو، یکی از گنجینه‌های پنهان پاریس با خانه‌های رنگارنگ</p>
-                    </div>
-                </section>
-
-                <section id="local-cuisine">
-                    <h2>غذای محلی</h2>
-                    <p>پاریس بهشت عاشقان غذا است. این تجربیات آشپزی را از دست ندهید:</p>
-                    
-                    <div class="inline-image right">
-                        <img src="https://source.unsplash.com/random/600x400/?french-cuisine" alt="غذای فرانسوی">
-                        <p class="caption">غذاهای سنتی فرانسوی، ترکیبی از طعم‌های منحصر به فرد</p>
-                    </div>
-                    
-                    <p>از کافه‌های سنتی گرفته تا رستوران‌های ستاره‌دار میشلن، پاریس تجربه‌های آشپزی بی‌نظیری را ارائه می‌دهد.</p>
-                </section>
-
-                <section id="travel-tips">
-                    <h2>نکات سفر</h2>
-                    <div class="tips-container">
-                        <div class="tip-card">
-                            <i class="fas fa-subway"></i>
-                            <h3>حمل و نقل عمومی</h3>
-                            <p>از مترو برای جابجایی آسان در شهر استفاده کنید</p>
+                    <h1 class="post-title">{{ post.0.title }}</h1>
+                    <div class="author-info">
+                        <div class="author-avatar">
+                            {% if post.0.author.profile_image %}
+                                <img src="{{ post.0.author.profile_image.url }}" alt="{{ post.0.author.username }}">
+                            {% else %}
+                                <div class="avatar-placeholder"></div>
+                            {% endif %}
                         </div>
-                        <div class="tip-card">
-                            <i class="fas fa-language"></i>
-                            <h3>زبان</h3>
-                            <p>اصطلاحات پایه فرانسوی را یاد بگیرید</p>
+                        <div class="author-details">
+                            <span class="author-name">{{ post.0.author.first_name }} {{ post.0.author.last_name }}</span>
+                            <span class="author-role">نویسنده</span>
                         </div>
-                        <div class="tip-card">
-                            <i class="fas fa-wallet"></i>
-                            <h3>بودجه</h3>
-                            <p>هزینه‌های خود را برنامه‌ریزی کنید</p>
+                        <div class="share-buttons">
+                            <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
                         </div>
                     </div>
-                </section>
-            </div>
-        </article>
+                </div>
 
-        <aside class="sidebar">
+                {% if post.0.image %}
+                    <div class="featured-image">
+                        <img src="{{ post.0.image.url }}" alt="{{ post.0.title }}">
+                    </div>
+                {% endif %}
+
+                <div class="post-body">
+                    {{ post.0.content|safe }}
+                </div>
+
+                <div class="post-footer">
+                    <div class="tags">
+                        <span class="tag-label">برچسب‌ها:</span>
+                        <a href="#" class="tag">{{ post.0.category }}</a>
+                        <a href="#" class="tag">هنر</a>
+                        <a href="#" class="tag">طراحی</a>
+                    </div>
+                    <div class="share-post">
+                        <span class="share-label">اشتراک‌گذاری:</span>
+                        <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+            </article>
+
             <div class="related-posts">
-                <h3>مطالب مرتبط</h3>
-                <div class="related-post">
-                    <img src="https://source.unsplash.com/random/200x150/?rome" alt="رم">
-                    <h4>کشف شگفتی‌های باستانی رم</h4>
-                </div>
-                <div class="related-post">
-                    <img src="https://source.unsplash.com/random/200x150/?barcelona" alt="بارسلونا">
-                    <h4>بارسلونا: گوهر مدیترانه</h4>
+                <h3>مقالات مرتبط</h3>
+                <div class="related-posts-grid">
+                    {% for related_post in related_posts|slice:":3" %}
+                        <div class="related-post">
+                            <div class="post-image">
+                                {% if related_post.image %}
+                                    <img src="{{ related_post.image.url }}" alt="{{ related_post.title }}">
+                                {% else %}
+                                    <div class="placeholder-image"></div>
+                                {% endif %}
+                            </div>
+                            <div class="post-meta">
+                                <span class="category">{{ related_post.category|upper }}</span>
+                                <span class="separator">|</span>
+                                <span class="date">{{ related_post.created_at|date:"d.m.y" }}</span>
+                            </div>
+                            <h3 class="post-title">{{ related_post.title }}</h3>
+                            <a href="/blog/{{ related_post.id }}" class="read-more">ادامه مطلب</a>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        </aside>
-    </main>
+        </main>
 
-    <script src="{% static 'javascript/blog.js' %}"></script>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fa-regular fa-eye"></i> ARTLST
+                </div>
+                <div class="footer-links">
+                    <div class="footer-menu">
+                        <h4>بخش‌ها</h4>
+                        <ul>
+                            <li><a href="#">مقالات</a></li>
+                            <li><a href="#">موضوعات</a></li>
+                            <li><a href="#">درباره ما</a></li>
+                            <li><a href="#">تماس</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-menu">
+                        <h4>پیوندها</h4>
+                        <ul>
+                            <li><a href="#">قوانین و مقررات</a></li>
+                            <li><a href="#">حریم خصوصی</a></li>
+                            <li><a href="#">کوکی‌ها</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="newsletter">
+                    <h4>عضویت در خبرنامه</h4>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="ایمیل خود را وارد کنید">
+                        <button type="submit">ارسال</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 ARTLST. تمامی حقوق محفوظ است.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{% static 'static_main/javascript/blogPost.js' %}"></script>
 </body>
 </html>
