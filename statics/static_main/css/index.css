@@ -481,7 +481,7 @@ body {
 	color: rgba(255, 253, 181 , 0.9);
 	font-size: 1.2rem;
 	text-shadow: 0 0 8px rgba(255, 253, 181 , 0.9);
-	letter-spacing: 0.5px;
+	letter-spacing: 1px;
 }
 
 
@@ -499,7 +499,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	max-width: 1200px;
+	max-width: 100%;
 	margin: 0 auto;
 }
 
@@ -554,32 +554,32 @@ body {
 		width: 22px;
 		height: 22px;
 	}
-	
+
 	.slide__top-right {
 		top: 100px;
 		right: 30px;
 		font-size: 18px;
 	}
-	
+
 	.slide__bottom-left {
 		bottom: 100px;
 		left: 30px;
 		font-size: 14px;
 	}
-	
+
 	.header {
 		padding: 0.5rem 1rem;
 	}
-	
+
 	.header__logo {
 		width: 100px;
 		height: 30px;
 	}
-	
+
 	.header__menu {
 		gap: 1rem;
 	}
-	
+
 	.header__menu-item a,
 	.header__auth-link {
 		font-size: 0.9rem;
@@ -595,7 +595,7 @@ body {
 }
 
 .section {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
 }
@@ -609,15 +609,24 @@ body {
 
 /* Ensure the page container allows for scrolling */
 .page-container {
+    min-height: calc(100vh - 200px);
+    padding: 0;
     width: 100%;
-    min-height: 100vh;
-    overflow: visible;
+    margin: 0;
 }
 
-.famous_cities{
+.container, .container_category {
     width: 100%;
-    margin-top: 85px;
-    overflow: visible;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.famous_cities, .category_cities {
+    width: 100%;
+    padding: 2rem 0;
+    margin: 0;
 }
 
 .famous_cities:last-of-type {
@@ -631,8 +640,7 @@ body {
     border-right: 7px solid #5C2FC2;
     padding-right: 10px;
     font-size: 2rem;
-    font-weight: 600;
-    text-align: right;
+	text-align: right;
 	margin-top: 50px;
     margin-bottom: 15px;
     margin-right: 20px;
@@ -787,7 +795,7 @@ body {
 }
 
 .card-info h1 {
-    font-family: "Playfair Display";
+	font-family: "Playfair Display", serif;
     font-size: 36px;
     font-weight: 700;
     text-shadow: rgba(0, 0, 0, 0.5) 0 10px 10px;
@@ -814,8 +822,7 @@ body {
     border-right: 7px solid #5C2FC2;
     padding-right: 10px;
     font-size: 2rem;
-    font-weight: 600;
-    text-align: right;
+	text-align: right;
 	margin-top: 50px;
     margin-bottom: 15px;
     margin-right: 20px;
@@ -970,7 +977,7 @@ body {
 }
 
 .card-info_category h1 {
-    font-family: "Playfair Display";
+	font-family: "Playfair Display", serif;
     font-size: 36px;
     font-weight: 700;
     text-shadow: rgba(0, 0, 0, 0.5) 0 10px 10px;

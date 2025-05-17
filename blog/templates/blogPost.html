@@ -1,159 +1,382 @@
+{% extends 'base/base.html' %}
 {% load static %}
 {% load extras %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.0.title }} - ARTLST</title>
-    <link rel="stylesheet" href="{% static 'static_main/css/blogPost.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <a href="/"><i class="fa-regular fa-eye"></i> ARTLST</a>
+{% block title %}{{ post.0.title }} | سفرینو{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+}
+.blogpost-layout {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 2.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem 1rem 2rem 1rem;
+}
+.blogpost-main {
+    flex: 2 1 0;
+    min-width: 0;
+}
+.blogpost-sidebar {
+    flex: 1 1 320px;
+    min-width: 300px;
+    max-width: 370px;
+    position: sticky;
+    top: 110px;
+    align-self: flex-start;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    height: fit-content;
+}
+#toc-placeholder {
+    margin-bottom: 2.5rem;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px 0 rgba(31, 38, 135, 0.08);
+    padding: 1.5rem 1rem 1rem 1rem;
+}
+.related-posts {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px 0 rgba(31, 38, 135, 0.08);
+    padding: 1.5rem 1rem 1rem 1rem;
+}
+.related-posts h3 {
+    color: #2b4162;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+    text-align: right;
+}
+.related-posts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.related-post {
+    background: #f8fafc;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.04);
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+.related-post:hover {
+    transform: translateY(-6px) scale(1.03) rotate(-1deg);
+    box-shadow: 0 8px 24px 0 rgba(31, 38, 135, 0.12);
+}
+.related-post .post-image {
+    width: 100%;
+    height: 90px;
+    background: #e0e7ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.related-post .post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+}
+.related-post:hover .post-image img {
+    transform: scale(1.08) rotate(1deg);
+}
+.related-post .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #7b8794;
+    font-size: 0.92rem;
+    margin: 0.7rem 1rem 0.3rem 1rem;
+}
+.related-post .post-title {
+    color: #2b4162;
+    font-size: 1.01rem;
+    font-weight: 600;
+    margin: 0.5rem 1rem 0.7rem 1rem;
+    min-height: 32px;
+}
+.related-post .read-more {
+    background: linear-gradient(90deg, #1b9aaa 0%, #2b4162 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0 1rem 0.7rem 1rem;
+    display: inline-block;
+    transition: background 0.3s;
+    box-shadow: 0 2px 8px rgba(27, 154, 170, 0.08);
+    text-decoration: none;
+}
+.related-post .read-more:hover {
+    background: linear-gradient(90deg, #2b4162 0%, #1b9aaa 100%);
+}
+@media (max-width: 1100px) {
+    .blogpost-layout { flex-direction: column; gap: 0; }
+    .blogpost-sidebar { position: static; max-width: 100vw; min-width: 0; width: 100%; margin-bottom: 2rem; }
+    .blogpost-main { width: 100%; }
+}
+@media (max-width: 700px) {
+    .blogpost-layout { padding: 0.5rem; }
+    .blogpost-sidebar, .blogpost-main { padding: 0; }
+    .related-posts { padding: 1rem 0.5rem; }
+}
+.blogpost-hero {
+    text-align: center;
+    margin: 2rem 0 2.5rem 0;
+    animation: fadeInDown 1s;
+}
+.blogpost-hero h1 {
+    font-size: 2.3rem;
+    color: #2b4162;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+.blogpost-hero .meta {
+    color: #7b8794;
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+.blogpost-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    max-width: 900px;
+    margin: 0 auto 2.5rem auto;
+    padding: 2.5rem 2rem 2rem 2rem;
+    position: relative;
+}
+.blogpost-card .author {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+.blogpost-card .author img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e7ef;
+}
+.blogpost-card .author span {
+    color: #2b4162;
+    font-size: 1.08rem;
+    font-weight: 500;
+}
+.blogpost-card .author-role {
+    color: #4f5d75;
+    font-size: 0.95rem;
+    margin-right: 0.5rem;
+}
+.blogpost-card .share-buttons {
+    margin-right: auto;
+    display: flex;
+    gap: 0.5rem;
+}
+.blogpost-card .share-btn {
+    background: #eaeaea;
+    color: #1b9aaa;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: background 0.3s, color 0.3s;
+    text-decoration: none;
+}
+.blogpost-card .share-btn:hover {
+    background: #1b9aaa;
+    color: #fff;
+}
+.blogpost-card .featured-image {
+    width: 100%;
+    height: 340px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 18px 0 rgba(31, 38, 135, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0e7ef;
+}
+.blogpost-card .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+}
+
+.blogpost-card .post-body {
+    font-size: 1.13rem;
+    color: #444;
+    line-height: 2.1;
+    margin-bottom: 2.5rem;
+    animation: fadeIn 1.2s;
+}
+.blogpost-card .post-body h2, .blogpost-card .post-body h3 {
+    color: #2b4162;
+    margin: 2.5rem 0 1.2rem 0;
+    font-weight: 700;
+    border-right: 4px solid #1b9aaa;
+    padding-right: 0.7rem;
+    background: linear-gradient(90deg, #f8fafc 60%, #e0e7ef 100%);
+    border-radius: 6px;
+}
+.blogpost-card .post-body ul, .blogpost-card .post-body ol {
+    margin: 1.5rem 0 1.5rem 0;
+    padding-right: 1.5rem;
+}
+.blogpost-card .post-body blockquote {
+    background: #f0f4f8;
+    border-right: 4px solid #1b9aaa;
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    color: #4f5d75;
+    font-style: italic;
+}
+.blogpost-card .post-body img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px rgba(31, 38, 135, 0.08);
+}
+.blogpost-card .tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+}
+.blogpost-card .tag {
+    background: #eaeaea;
+    color: #1b9aaa;
+    border-radius: 16px;
+    padding: 0.3rem 1rem;
+    font-size: 0.98rem;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+.blogpost-card .tag:hover {
+    background: #1b9aaa;
+    color: #fff;
+}
+.blogpost-card .share-post {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="blogpost-layout">
+    <div class="blogpost-main animate__animated animate__fadeInUp">
+        <div class="blogpost-hero animate__animated animate__fadeInDown">
+            <h1>{{ post.0.title }}</h1>
+            <div class="meta">
+                <span>{{ post.0.category|default:'سفر' }}</span>
+                <span>•</span>
+                <span>{{ post.0.created_at|jdate:"%Y/%m/%d" }}</span>
+                <span>•</span>
+                <span>{{ post.content|read_time }} دقیقه مطالعه</span>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="{% url 'blog:show_post' %}">مقالات</a></li>
-                    <li><a href="#">موضوعات</a></li>
-                    <li><a href="#">درباره ما</a></li>
-                    <li><a href="#">تماس</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <button class="subscribe-btn">اشتراک</button>
-                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-        </header>
-
-        <main class="post-content">
-            <article>
-                <div class="post-header">
-                    <div class="post-meta">
-                        <span class="category">{{ post.0.category|upper }}</span>
-                        <span class="separator">|</span>
-                        <span class="read-time">{{ post.content|read_time }} دقیقه مطالعه</span>
-                        <span class="separator">|</span>
-                        <span class="date">{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
-
-                    </div>
-                    <h1 class="post-title">{{ post.0.title }}</h1>
-                    <div class="author-info">
-                        <div class="author-avatar">
-                            {% if post.0.author.profile_image %}
-                                <img src="{{ post.0.author.profile_image.url }}" alt="{{ post.0.author.username }}">
-                            {% else %}
-                                <div class="avatar-placeholder"></div>
-                            {% endif %}
-                        </div>
-                        <div class="author-details">
-                            <span class="author-name">{{ post.0.author.first_name }} {{ post.0.author.last_name }}</span>
-                            <span class="author-role">نویسنده</span>
-                        </div>
-                        <div class="share-buttons">
-                            <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                {% if post.0.image %}
-                    <div class="featured-image">
-                        <img src="{{ post.0.image.url }}" alt="{{ post.0.title }}">
-                    </div>
+        </div>
+        <div class="blogpost-card">
+            <div class="author">
+                {% if post.0.author.profile_image %}
+                    <img src="{{ post.0.author.profile_image.url }}" alt="{{ post.0.author.username }}">
+                {% else %}
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ post.0.author.username }}" alt="avatar">
                 {% endif %}
-
-                <div class="post-body">
-                    {{ post.0.content|safe }}
-                </div>
-
-                <div class="post-footer">
-                    <div class="tags">
-                        <span class="tag-label">برچسب‌ها:</span>
-                        <a href="#" class="tag">{{ post.0.category }}</a>
-                        <a href="#" class="tag">هنر</a>
-                        <a href="#" class="tag">طراحی</a>
-                    </div>
-                    <div class="share-post">
-                        <span class="share-label">اشتراک‌گذاری:</span>
-                        <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
-                    </div>
-                </div>
-            </article>
-
-            <div class="related-posts">
-                <h3>مقالات مرتبط</h3>
-                <div class="related-posts-grid">
-                    {% for related_post in related_posts|slice:":3" %}
-                        <div class="related-post">
-                            <div class="post-image">
-                                {% if related_post.image %}
-                                    <img src="{{ related_post.image.url }}" alt="{{ related_post.title }}">
-                                {% else %}
-                                    <div class="placeholder-image"></div>
-                                {% endif %}
-                            </div>
-                            <div class="post-meta">
-                                <span class="category">{{ related_post.category|upper }}</span>
-                                <span class="separator">|</span>
-                                <span class="date">{{ related_post.created_at|date:"d.m.y" }}</span>
-                            </div>
-                            <h3 class="post-title">{{ related_post.title }}</h3>
-                            <a href="/blog/{{ related_post.id }}" class="read-more">ادامه مطلب</a>
-                        </div>
-                    {% endfor %}
+                {% if post.0.author.first_name != "" %}
+                    <span>{{ post.0.author.first_name }} {{ post.0.author.last_name }}</span>
+                {% else %}
+                    <span>{{ post.0.author.username }}</span>
+                {% endif %}
+                <span class="author-role">نویسنده</span>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
                 </div>
             </div>
-        </main>
-
-        <footer>
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fa-regular fa-eye"></i> ARTLST
+            {% if post.0.image %}
+                <div class="featured-image">
+                    <img src="{{ post.0.image.url }}" alt="{{ post.0.title }}">
                 </div>
-                <div class="footer-links">
-                    <div class="footer-menu">
-                        <h4>بخش‌ها</h4>
-                        <ul>
-                            <li><a href="#">مقالات</a></li>
-                            <li><a href="#">موضوعات</a></li>
-                            <li><a href="#">درباره ما</a></li>
-                            <li><a href="#">تماس</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-menu">
-                        <h4>پیوندها</h4>
-                        <ul>
-                            <li><a href="#">قوانین و مقررات</a></li>
-                            <li><a href="#">حریم خصوصی</a></li>
-                            <li><a href="#">کوکی‌ها</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="newsletter">
-                    <h4>عضویت در خبرنامه</h4>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="ایمیل خود را وارد کنید">
-                        <button type="submit">ارسال</button>
-                    </form>
-                </div>
+            {% endif %}
+            <div class="post-body">
+                {{ post.0.content|safe }}
             </div>
-            <div class="copyright">
-                <p>© 2023 ARTLST. تمامی حقوق محفوظ است.</p>
+            <div class="tags">
+                <span class="tag-label">برچسب‌ها:</span>
+                <a href="#" class="tag">{{ post.0.category }}</a>
+                <a href="#" class="tag">هنر</a>
+                <a href="#" class="tag">طراحی</a>
             </div>
-        </footer>
+            <div class="share-post">
+                <span class="share-label">اشتراک‌گذاری:</span>
+                <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
+            </div>
+        </div>
     </div>
-
-    <script src="{% static 'static_main/javascript/blogPost.js' %}"></script>
-</body>
-</html>
+    <aside class="blogpost-sidebar animate__animated animate__fadeInLeft">
+        <div id="toc-placeholder"></div>
+        <div class="related-posts">
+            <h3>مقالات مرتبط</h3>
+            {% get_related_posts post.0 as related_posts %}
+            <div class="related-posts-grid">
+                {% for related_post in related_posts %}
+                <div class="related-post">
+                    <div class="post-image">
+                        {% if related_post.image %}
+                            <img src="{{ related_post.image.url }}" alt="{{ related_post.title }}">
+                        {% else %}
+                            <img src="https://source.unsplash.com/400x200/?travel,trip,nature" alt="سفر">
+                        {% endif %}
+                    </div>
+                    <div class="post-meta">
+                        <span>{{ related_post.category|default:'سفر' }}</span>
+                        <span>•</span>
+                        <span>{{ related_post.created_at|jdate:"%Y/%m/%d" }}</span>
+                    </div>
+                    <div class="post-title">{{ related_post.title }}</div>
+                    <a href="/blog/{{ related_post.id }}" class="read-more">ادامه مطلب</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </aside>
+</div>
+{% endblock %}

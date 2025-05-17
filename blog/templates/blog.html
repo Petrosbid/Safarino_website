@@ -1,109 +1,209 @@
+{% extends 'base/base.html' %}
 {% load static %}
 {% load extras %}
 
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTLST - مقالات و محتوا</title>
-    <link rel="stylesheet" href="{% static 'static_main/css/blog.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <a href="/"><i class="fa-regular fa-eye"></i> ARTLST</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="{% url 'blog:show_post' %}" class="active">مقالات</a></li>
-                    <li><a href="#">موضوعات</a></li>
-                    <li><a href="#">درباره ما</a></li>
-                    <li><a href="#">تماس</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <button class="subscribe-btn">اشتراک</button>
-                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-        </header>
+{% block title %}مقالات سفر | سفرینو{% endblock %}
 
-        <main>
-            <div class="featured-posts">
-                {% if blog_list %}
-                    {% for post in blog_list|slice:":2" %}
-                        <div class="featured-post">
-                            <div class="post-image">
-                                {% if post.image %}
-                                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
-                                {% else %}
-                                    <div class="placeholder-image"></div>
-                                {% endif %}
-                            </div>
-                            <div class="post-meta">
-                                <span class="category">{{ post.category|upper }}</span>
-                                <span class="separator">|</span>
-                                <span class="read-time">{{ post.content|read_time }} دقیقه مطالعه</span>
-                                <span class="separator">|</span>
-                                <span class="date">{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
-                            </div>
-                            <h2 class="post-title">{{ post.title }}</h2>
-                            <a href="/blog/{{ post.id }}" class="read-more">
-                                <span class="author-avatar">
-                                    {% if post.author.profile_image %}
-                                        <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.username }}">
-                                    {% else %}
-                                        <div class="avatar-placeholder"></div>
-                                    {% endif %}
-                                </span>
-                            </a>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+}
+.blog-hero {
+    text-align: center;
+    margin: 2rem 0 3rem 0;
+    animation: fadeInDown 1s;
+}
+.blog-hero h1 {
+    font-size: 2.7rem;
+    color: #2b4162;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+.blog-hero p {
+    color: #4f5d75;
+    font-size: 1.2rem;
+}
+.blog-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+.blog-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    overflow: hidden;
+    width: 340px;
+    transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+    position: relative;
+    cursor: pointer;
+    animation: fadeInUp 1s;
+}
+.blog-card:hover {
+    transform: translateY(-12px) scale(1.03) rotate(-1deg);
+    box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.18);
+}
+.blog-card .blog-image {
+    width: 100%;
+    height: 200px;
+    background: #e0e7ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+.blog-card .blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+}
+.blog-card:hover .blog-image img {
+    transform: scale(1.08) rotate(1deg);
+}
+.blog-card .blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.95rem;
+    color: #7b8794;
+    margin: 1rem 1.2rem 0.5rem 1.2rem;
+}
+.blog-card .blog-meta .dot {
+    width: 6px;
+    height: 6px;
+    background: #a0aec0;
+    border-radius: 50%;
+    display: inline-block;
+}
+.blog-card .blog-title {
+    font-size: 1.3rem;
+    color: #2b4162;
+    font-weight: 600;
+    margin: 0.7rem 1.2rem 0.5rem 1.2rem;
+    min-height: 48px;
+    transition: color 0.3s;
+}
+.blog-card:hover .blog-title {
+    color: #1b9aaa;
+}
+.blog-card .blog-desc {
+    color: #4f5d75;
+    font-size: 1.05rem;
+    margin: 0 1.2rem 1.2rem 1.2rem;
+    min-height: 60px;
+}
+.blog-card .blog-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1.2rem 1.2rem 1.2rem;
+}
+.blog-card .author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.blog-card .author img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e7ef;
+}
+.blog-card .author span {
+    color: #2b4162;
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+.blog-card .read-more {
+    background: linear-gradient(90deg, #1b9aaa 0%, #2b4162 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 2px 8px rgba(27, 154, 170, 0.08);
+}
+.blog-card .read-more:hover {
+    background: linear-gradient(90deg, #2b4162 0%, #1b9aaa 100%);
+}
+@media (max-width: 900px) {
+    .blog-list { flex-direction: column; align-items: center; }
+    .blog-card { width: 95vw; max-width: 400px; }
+}
 
-            <div class="regular-posts">
-                {% if blog_list %}
-                    {% for post in blog_list|slice:"2:" %}
-                        <div class="regular-post">
-                            <div class="post-image">
-                                {% if post.image %}
-                                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
-                                {% else %}
-                                    <div class="placeholder-image"></div>
-                                {% endif %}
-                            </div>
-                            <div class="post-meta">
-                                <span class="category">{{ post.category|upper }}</span>
-                                <span class="separator">|</span>
-                                <span class="read-time">{{ post.content|wordcount|divisibleby:200 }} دقیقه مطالعه</span>
-                                <span class="separator">|</span>
-                                <span class="date">{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
-                            </div>
-                            <h3 class="post-title">{{ post.title }}</h3>
-                            <a href="/blog/{{ post.id }}" class="read-more">
-                                <span class="author-avatar">
-                                    {% if post.author.profile_image %}
-                                        <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.username }}">
-                                    {% else %}
-                                        <div class="avatar-placeholder"></div>
-                                    {% endif %}
-                                </span>
-                            </a>
-                        </div>
-                    {% endfor %}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    VanillaTilt.init(document.querySelectorAll('.blog-card'), {
+        max: 8,
+        speed: 400,
+        glare: true,
+        'max-glare': 0.18
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="blog-hero animate__animated animate__fadeInDown">
+    <h1>مقالات سفر</h1>
+    <p>جدیدترین و جذاب‌ترین مقالات سفر، راهنماها و تجربیات گردشگری را اینجا بخوانید.</p>
+</div>
+<div class="blog-list">
+    {% if blog_list %}
+        {% for post in blog_list %}
+        <div class="blog-card animate__animated animate__fadeInUp">
+            <a href="/blog/{{ post.id }}" class="blog-image">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
                 {% else %}
-                    <p class="no-posts">هیچ مقاله‌ای موجود نیست.</p>
+                    <img src="https://source.unsplash.com/400x200/?travel,trip,nature" alt="سفر">
                 {% endif %}
+            </a>
+            <div class="blog-meta">
+                <span>{{ post.category|default:'سفر' }}</span>
+                <span class="dot"></span>
+                <span>{{ post.created_at|jdate:"%Y/%m/%d" }}</span>
+                <span class="dot"></span>
+                <span>{{ post.content|read_time }} دقیقه مطالعه</span>
             </div>
-        </main>
-    </div>
+            <div class="blog-title">{{ post.title }}</div>
+            <div class="blog-desc">{{ post.content|truncatewords:20 }}</div>
+            <div class="blog-footer">
+                <div class="author">
+                    {% if post.author.profile_image %}
+                        <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.username }}">
+                    {% else %}
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ post.author.username }}" alt="avatar">
+                    {% endif %}
+                {% if post.author.first_name != "" %}
+                    <span>{{ post.author.first_name }} {{ post.author.last_name }}</span>
+                {% else %}
+                    <span>{{ post.author.username }}</span>
+                {% endif %}
 
-    <script src="{% static 'static_main/javascript/blog.js' %}"></script>
-</body>
-</html>
+                </div>
+                <a href="/blog/{{ post.id }}" class="read-more">مطالعه</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-posts">هیچ مقاله‌ای موجود نیست.</p>
+    {% endif %}
+</div>
+{% endblock %}
