@@ -14,6 +14,8 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     category = models.CharField(max_length=100)  # موضوع پست
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='posts')
+    likes = models.PositiveIntegerField(default=0)
+    views = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.title}"

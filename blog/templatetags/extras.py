@@ -1,8 +1,10 @@
+from unicodedata import category
 from django import template
 import jdatetime
 from datetime import datetime
 from django.db import models
 from blog.models import Post
+import re
 
 register = template.Library()
 
@@ -56,3 +58,10 @@ def get_related_posts(post, count=6):
         qs = list(qs) + list(extra_qs[:count-len(qs)])
         return qs[:count]
     return qs[:count]
+
+@register.filter
+def categories(value):
+    if not value:
+        return []
+    return re.split(r'[،,]', value)
+

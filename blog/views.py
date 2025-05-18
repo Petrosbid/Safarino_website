@@ -11,6 +11,8 @@ def show_post(request):
 def blog_post(request , post_id):
     #post = Post.objects.get(title = post_title)
     post = get_list_or_404(Post , id = post_id)
+    post[0].views += 1
+    post[0].save()
     context = {
         'post': post,
     }
