@@ -1,4 +1,6 @@
-from django.shortcuts import render , get_list_or_404
+from django.shortcuts import render , get_list_or_404, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from .models import Post
 # Create your views here.
 def show_post(request):
@@ -17,3 +19,22 @@ def blog_post(request , post_id):
         'post': post,
     }
     return render(request , 'blogPost.html' , context)
+
+@require_POST
+def update_likes(request, post_id):
+    if not request.is_ajax():
+        return JsonResponse({'error': 'Invalid request'}, status=400)
+    
+    post = get_object_or_404(Post, id=post_id)
+    action = request.POST.get('action')
+    
+    if action == 'like':
+        post.likes += 1
+    elif action == 'dislike':
+        if post.likes > 0:
+            post.likes -= 1
+    else:
+        return JsonResponse({'error': 'Invalid action'}, status=400)
+    
+    post.save()
+    return JsonResponse({'likes': post.likes})

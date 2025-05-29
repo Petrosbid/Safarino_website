@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, login , get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render , redirect
-
 from Safarino.forms import LoginForm, RegisterForm
+from blog.models import Post
 
 
 def home_page(request):
+    latest_posts = Post.objects.all().order_by('-created_at')[:3]  # Get 3 latest posts
     context = {
-        'message': 'Hi, welcome to my project'
+        'latest_posts': latest_posts
     }
     return render(request, 'home_page.html', context)
 
@@ -51,3 +52,6 @@ def auth(request):
         'notfound' : notfound
     }
     return render(request, "login.html", context)
+
+def about(request):
+    return render(request, 'about.html')

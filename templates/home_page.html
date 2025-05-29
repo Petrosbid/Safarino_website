@@ -45,7 +45,7 @@
 <div class="famous_cities">
     <h2 class="famous_cities__title">سفر های پرطرفدار</h2>
     <div class="container">
-        <card data-image="https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop=">
+        <card data-image="https://irantours24.com/wp-content/uploads/2018/10/qeshm-island.jpg">
             <div class="card-wrap">
                 <div class="card">
                     <div class="card-bg"></div>
@@ -57,7 +57,7 @@
             </div>
         </card>
 
-        <card data-image="https://images.unsplash.com/photo-1479659929431-4342107adfc1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
+        <card data-image="https://irantours24.com/wp-content/uploads/2018/10/qeshm-island.jpg">
             <div class="card-wrap">
                 <div class="card">
                     <div class="card-bg"></div>
@@ -69,7 +69,7 @@
             </div>
         </card>
 
-        <card data-image="https://images.unsplash.com/photo-1479644025832-60dabb8be2a1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
+        <card data-image="https://irantours24.com/wp-content/uploads/2018/10/qeshm-island.jpg">
             <div class="card-wrap">
                 <div class="card">
                     <div class="card-bg"></div>
@@ -81,7 +81,7 @@
             </div>
         </card>
 
-        <card data-image="https://images.unsplash.com/photo-1479644025832-60dabb8be2a1?dpr=2&auto=compress,format&fit=crop&w=1199&h=799&q=80&cs=tinysrgb&crop=">
+        <card data-image="https://irantours24.com/wp-content/uploads/2018/10/qeshm-island.jpg">
             <div class="card-wrap">
                 <div class="card">
                     <div class="card-bg"></div>
@@ -147,4 +147,148 @@
         </card>
     </div>
 </div>
+
+
+<!-- Blog Section -->
+<section class="blog-section">
+    <div class="blog-header">
+        <h2 class="section-title">آخرین مقالات</h2>
+        <p class="blog-subtitle">جدیدترین مطالب و راهنمای سفر</p>
+    </div>
+    
+    <div class="blog-container">
+        {% for post in latest_posts %}
+        <article class="blog-card wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+            <div class="blog-image">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                {% else %}
+                    <img src="{% static 'static_main/images/blog-default.jpg' %}" alt="{{ post.title }}">
+                {% endif %}
+                <div class="blog-category">{{ post.category }}</div>
+            </div>
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span class="blog-date"><i class="far fa-calendar-alt"></i> {{ post.created_at|date:"d F Y" }}</span>
+                    <span class="blog-author"><i class="far fa-user"></i> {{ post.author.get_full_name|default:post.author.username }}</span>
+                </div>
+                <h3 class="blog-title">{{ post.title }}</h3>
+                <p class="blog-excerpt">{{ post.content|striptags|truncatechars:150 }}</p>
+                <a href="{% url 'blog:blog_post' post.id %}" class="blog-link">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <div class="blog-cta">
+        <a href="{% url 'blog:show_post' %}" class="blog-cta-button">
+            مشاهده همه مقالات
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-us">
+    <h2 class="section-title">چرا سفرینو؟</h2>
+    <div class="why-us__features">
+        <div class="feature-card wow fadeInUp" data-wow-delay="0.1s">
+            <i class="fas fa-globe-asia"></i>
+            <h3>تنوع مقاصد</h3>
+            <p>دسترسی به صدها مقصد گردشگری داخلی و خارجی با بهترین قیمت‌ها.</p>
+        </div>
+        <div class="feature-card wow fadeInUp" data-wow-delay="0.2s">
+            <i class="fas fa-hotel"></i>
+            <h3>رزرو آسان هتل</h3>
+            <p>رزرو آنلاین هتل با چند کلیک و پشتیبانی ۲۴ ساعته.</p>
+        </div>
+        <div class="feature-card wow fadeInUp" data-wow-delay="0.3s">
+            <i class="fas fa-shield-alt"></i>
+            <h3>امنیت و اعتماد</h3>
+            <p>تضمین امنیت پرداخت و اطلاعات شما در تمامی مراحل سفر.</p>
+        </div>
+        <div class="feature-card wow fadeInUp" data-wow-delay="0.4s">
+            <i class="fas fa-headset"></i>
+            <h3>پشتیبانی حرفه‌ای</h3>
+            <p>تیم پشتیبانی ما همیشه آماده پاسخگویی به سوالات شماست.</p>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <h2 class="section-title">چطور کار می‌کند؟</h2>
+    <div class="steps">
+        <div class="step wow fadeInUp" data-wow-delay="0.1s">
+            <span class="step-number">۱</span>
+            <h3>صفحه برنامه ریزی</h3>
+            <p>وارد صفحه برنامه ریزی سفر شوید.</p>
+        </div>
+        <div class="step wow fadeInUp" data-wow-delay="0.2s">
+            <span class="step-number">۲</span>
+            <h3>پاسخ به سوالات</h3>
+            <p>به سوالات صفحه راجب سفر خود پاسخ دهید</p>
+        </div>
+        <div class="step wow fadeInUp" data-wow-delay="0.3s">
+            <span class="step-number">۳</span>
+            <h3>تایید سفر</h3>
+            <p>با گزینه تایید سفر خود را نهایی کنید.</p>
+        </div>
+        <div class="step wow fadeInUp" data-wow-delay="0.4s">
+            <span class="step-number">۴</span>
+            <h3>سفر و لذت</h3>
+            <p>با خیال راحت سفر کنید و از تجربه خود لذت ببرید!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+    <h2 class="section-title">نظرات کاربران</h2>
+    <div class="testimonials__container">
+        <div class="testimonial-card wow fadeInUp" data-wow-delay="0.1s">
+            <div class="testimonial-avatar">
+                <img src="{% static 'static_main/images/user1.jpg' %}" alt="کاربر ۱">
+            </div>
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">سفرینو بهترین تجربه سفر من بود! همه چیز عالی و بدون دردسر انجام شد.</p>
+            <span class="testimonial-name">مریم رضایی</span>
+        </div>
+        <div class="testimonial-card wow fadeInUp" data-wow-delay="0.2s">
+            <div class="testimonial-avatar">
+                <img src="{% static 'static_main/images/user2.jpg' %}" alt="کاربر ۲">
+            </div>
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+            </div>
+            <p class="testimonial-text">پشتیبانی سریع و قیمت‌های مناسب باعث شد همیشه سفرینو رو انتخاب کنم.</p>
+            <span class="testimonial-name">علی محمدی</span>
+        </div>
+        <div class="testimonial-card wow fadeInUp" data-wow-delay="0.3s">
+            <div class="testimonial-avatar">
+                <img src="{% static 'static_main/images/user3.jpg' %}" alt="کاربر ۳">
+            </div>
+            <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="testimonial-text">رزرو هتل و تور خیلی راحت بود و همه چیز طبق برنامه پیش رفت.</p>
+            <span class="testimonial-name">سارا احمدی</span>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

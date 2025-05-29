@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 from Safarino.views import home_page , auth , user_dashboard
 
 urlpatterns = ([
@@ -27,6 +28,8 @@ urlpatterns = ([
     path('dashboard' , user_dashboard , name='user_dashboard'),
     path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
     path('', include(('blog.urls', 'blog_root'), namespace='blog_root')),
+    path('trip/', include(('trip.urls', 'trip'), namespace='trip')),
     path('ckeditor/', include('ckeditor_uploader.urls')), # اضافه کردن مسیر برای ckeditor
+    path('about/', views.about, name='about'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)) # اصلاح مسیر برای media files

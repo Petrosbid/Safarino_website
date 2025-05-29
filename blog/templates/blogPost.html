@@ -6,17 +6,19 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<link rel="stylesheet" href="{% static 'static_main/css/blogPost.css' %}"/>
+<link rel="stylesheet" href="{% static 'static_main/css/postblog.css' %}"/>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<script src="{% static 'static_main/javascript/blogPost.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<div class="blogpost-hero animate__animated animate__fadeInDown">
+<div  class="blogpost-hero animate__animated animate__fadeInDown" style="
+    background-image: url('{% static 'static_main/images/20852675_6345959-compressed.jpg' %}');">
     <h1>{{ post.0.title }}</h1>
     <div class="meta">
         <span>تعداد بازدید: {{ post.0.views}}</span>
@@ -44,7 +46,7 @@
                 {% endif %}
 
                 <div class="share-buttons">
-                    <a href="#" class="share-btn">
+                    <a href="#" class="twitter-share-button share-btn">
                         <lord-icon
                             src="https://cdn.lordicon.com/vnvsnvov.json"
                             trigger="hover"
@@ -81,41 +83,69 @@
             <div class="post-body">
                 {{ post.0.content|safe }}
             </div>
+
+            <hr style="margin-bottom: 10px">
+
             <div class="tags">
                 <span class="tag-label">برچسب‌ها:</span>
                 {% for category in post.0.category|categories %}
                     <a href="#" class="tag">{{ category }}</a>
                 {% endfor %}
             </div>
-            <div class="share-post">
-                <span class="share-label">اشتراک‌گذاری:</span>
-                <a href="#" class="share-btn">
-                    <lord-icon
-                        src="https://cdn.lordicon.com/vnvsnvov.json"
-                        trigger="hover"
-                        stroke="bold"
-                        colors="primary:#121331,secondary:#2b4162"
-                        style="width:250px;height:250px">
-                    </lord-icon>
-                </a>
-                <a href="#" class="share-btn">
-                    <lord-icon
-                        src="https://cdn.lordicon.com/axewyqun.json"
-                        trigger="hover"
-                        stroke="bold"
-                        colors="primary:#121331,secondary:#2b4162"
-                        style="width:250px;height:250px">
-                    </lord-icon>
-                </a>
-                <a href="#" class="share-btn">
-                    <lord-icon
-                        src="https://cdn.lordicon.com/kxnplube.json"
-                        trigger="hover"
-                        stroke="bold"
-                        colors="primary:#121331,secondary:#2b4162"
-                        style="width:250px;height:250px">
-                    </lord-icon>
-                </a>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="share-post">
+                    <span class="share-label">مورد پسند بود:</span>
+                    <a href="#" class="share-btn">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/msyeyaka.json"
+                            trigger="hover"
+                            state="hover-up"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:50px;height:50px">
+                        </lord-icon>
+                    </a>
+                    <a href="#" class="share-btn">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/msyeyaka.json"
+                            trigger="hover"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:50px;height:50px">
+                        </lord-icon>
+                    </a>
+                    <span>{{ post.0.likes }}</span>
+                </div>
+                <div class="share-post">
+                    <span class="share-label">اشتراک‌گذاری:</span>
+                    <a href="#" class="twitter-share-button share-btn">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/vnvsnvov.json"
+                            trigger="hover"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:50px;height:50px">
+                        </lord-icon>
+                    </a>
+                    <a href="#" class="share-btn">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/axewyqun.json"
+                            trigger="hover"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:50px;height:50px">
+                        </lord-icon>
+                    </a>
+                    <a href="#" class="share-btn">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/kxnplube.json"
+                            trigger="hover"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:50px;height:50px">
+                        </lord-icon>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
