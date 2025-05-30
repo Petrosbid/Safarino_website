@@ -7,6 +7,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" href="{% static 'static_main/css/postblog.css' %}"/>
+<link rel="stylesheet" href="{% static 'static_main/css/comments.css' %}"/>
 {% endblock %}
 
 {% block extra_js %}
@@ -14,6 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 <script src="{% static 'static_main/javascript/blogPost.js' %}"></script>
+<script src="{% static 'static_main/javascript/comments.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -52,7 +54,7 @@
                             trigger="hover"
                             stroke="bold"
                             colors="primary:#121331,secondary:#2b4162"
-                            style="width:250px;height:250px">
+                            style="width:50px;height:50px">
                         </lord-icon>
                     </a>
                     <a href="#" class="share-btn">
@@ -61,7 +63,7 @@
                             trigger="hover"
                             stroke="bold"
                             colors="primary:#121331,secondary:#2b4162"
-                            style="width:250px;height:250px">
+                            style="width:50px;height:50px">
                         </lord-icon>
                     </a>
                     <a href="#" class="share-btn">
@@ -70,7 +72,7 @@
                             trigger="hover"
                             stroke="bold"
                             colors="primary:#121331,secondary:#2b4162"
-                            style="width:250px;height:250px">
+                            style="width:50px;height:50px">
                         </lord-icon>
                     </a>
                 </div>
@@ -177,4 +179,70 @@
         </div>
     </aside>
 </div>
+
+<!-- Comment Section -->
+<div class="comments-section animate__animated animate__fadeInUp">
+    <h3>نظرات ({{ comments.count }})</h3>
+    
+    {% if user.is_authenticated %}
+    <div class="comment-form">
+        <form method="POST" action="{% url 'comments:add_comment' %}">
+            {% csrf_token %}
+            <input type="hidden" name="content_type" value="blog.post">
+            <input type="hidden" name="object_id" value="{{ post.0.id }}">
+            <textarea name="text" placeholder="نظر خود را بنویسید..." required></textarea>
+            <button type="submit" class="submit-comment">ارسال نظر</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="login-to-comment">
+        <p>برای ارسال نظر، لطفا <a href="{% url 'login' %}">وارد شوید</a> یا <a href="{% url 'login' %}">ثبت نام کنید</a>.</p>
+    </div>
+    {% endif %}
+
+    <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment {% if comment.status == 'approved' %}approved{% else %}pending{% endif %}">
+            <div class="comment-header">
+                {% if comment.user.profile_image %}
+                    <img src="{{ comment.user.profile_image.url }}" alt="{{ comment.user.username }}" class="comment-avatar">
+                {% else %}
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ comment.user.username }}" alt="avatar" class="comment-avatar">
+                {% endif %}
+                <div class="comment-info">
+                    <span class="comment-author">
+                        {% if comment.user.first_name %}
+                            {{ comment.user.first_name }} {{ comment.user.last_name }}
+                        {% else %}
+                            {{ comment.user.username }}
+                        {% endif %}
+                    </span>
+                    <span class="comment-date">{{ comment.created_at|jdate:"%Y/%m/%d" }}</span>
+                </div>
+            </div>
+            <div class="comment-content">
+                {{ comment.text }}
+            </div>
+            <div class="comment-actions">
+                <button class="like-button" data-comment-id="{{ comment.id }}">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/msyeyaka.json"
+                            trigger="hover"
+                            state="hover-up"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:35px;height:35px">
+                        </lord-icon>
+                    <span class="likes-count">{{ comment.likes }}</span>
+                </button>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-comments">
+            <p>هنوز نظری ثبت نشده است. اولین نظر را شما ثبت کنید!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

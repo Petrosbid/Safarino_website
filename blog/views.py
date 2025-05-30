@@ -1,7 +1,10 @@
 from django.shortcuts import render , get_list_or_404, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.contenttypes.models import ContentType
 from .models import Post
+from comments.models import Comment
+
 # Create your views here.
 def show_post(request):
     posts = Post.objects.all()
@@ -15,8 +18,18 @@ def blog_post(request , post_id):
     post = get_list_or_404(Post , id = post_id)
     post[0].views += 1
     post[0].save()
+    
+    # Get comments for this post
+    content_type = ContentType.objects.get_for_model(Post)
+    comments = Comment.objects.filter(
+        content_type=content_type,
+        object_id=post_id,
+        status='approved'
+    ).order_by('-created_at')
+    
     context = {
         'post': post,
+        'comments': comments,
     }
     return render(request , 'blogPost.html' , context)
 

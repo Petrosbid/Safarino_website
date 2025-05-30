@@ -1,0 +1,211 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load extrass %}
+
+{% block title %}{{ hotel.name }} | سفرینو{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{% static 'static_main/css/HotelPost.css' %}">
+<style>
+    .hotel-swiper {
+        width: 100%;
+        height: 400px;
+        position: relative;
+    }
+    .swiper-slide {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hotel-hero animate__animated animate__fadeInDown" style="background-image: url('{{ images.0.image.url }}');">
+    <h1>{{ hotel.name }}</h1>
+    <div class="meta">
+        <span>امتیاز: {{ hotel.score }} از ۵</span>
+        <span>•</span>
+        <span>{{ hotel.stars }} ستاره</span>
+        <span>•</span>
+        <span>{{ hotel.address }}</span>
+        {% if hotel.location %}
+        <span>•</span>
+        <span>موقعیت: {{ hotel.location }}</span>
+        {% endif %}
+    </div>
+</div>
+
+<div class="hotel-layout">
+    <div class="hotel-main animate__animated animate__fadeInUp">
+        <div class="hotel-card">
+            <div class="swiper hotel-swiper">
+                <div class="swiper-wrapper">
+                    {% if hotel.images.all %}
+                        {% for image in hotel.images.all %}
+                        <div class="swiper-slide">
+                            <img src="{{ image.image.url }}" class="w-100 h-100 object-fit-cover" alt="{{ hotel.name }}">
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="swiper-slide">
+                            <img src="{% static 'static_main/images/hotel-hero.jpg' %}" class="w-100 h-100 object-fit-cover" alt="{{ hotel.name }}">
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <div class="hotel-body">
+                <h2 class="headerhotel">درباره هتل</h2>
+                <div style="padding-right:20px">{{ hotel.description|safe }}</div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <aside class="hotel-sidebar animate__animated animate__fadeInLeft">
+        <div class="booking-card">
+            <h5>رزرو اتاق</h5>
+            <div class="price-card">
+                <div class="price-title">قیمت پایه هر شب</div>
+                <div class="price-amount">{{ hotel.base_price|floatformat:0 }} تومان</div>
+            </div>
+            {% if hotel.weekend_price %}
+            <div class="price-card">
+                <div class="price-title">قیمت آخر هفته</div>
+                <div class="price-amount">{{ hotel.weekend_price|floatformat:0 }} تومان</div>
+            </div>
+            {% endif %}
+            {% if hotel.peak_season_price %}
+            <div class="price-card">
+                <div class="price-title">قیمت فصل شلوغ</div>
+                <div class="price-amount">{{ hotel.peak_season_price|floatformat:0 }} تومان</div>
+            </div>
+            {% endif %}
+            <button class="book-btn mt-3">رزرو آنلاین</button>
+        </div>
+        {% if hotel.latitude and hotel.longitude %}
+        <div class="map-card">
+            <h5>موقعیت هتل</h5>
+            <div id="map" style="height: 220px; border-radius: 8px;"></div>
+        </div>
+        {% endif %}
+    </aside>
+</div>
+<!-- Comment Section -->
+<div class="comments-section animate__animated animate__fadeInUp">
+    <h3>نظرات ({{ comments.count }})</h3>
+
+    {% if user.is_authenticated %}
+    <div class="comment-form">
+        <form method="POST" action="{% url 'comments:add_comment' %}">
+            {% csrf_token %}
+            <input type="hidden" name="content_type" value="hotel">
+            <input type="hidden" name="object_id" value="{{ hotel.id }}">
+            <textarea name="text" placeholder="نظر خود را بنویسید..." required></textarea>
+            <button type="submit" class="submit-comment">ارسال نظر</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="login-to-comment">
+        <p>برای ارسال نظر، لطفا <a href="{% url 'login' %}">وارد شوید</a> یا <a href="{% url 'login' %}">ثبت نام کنید</a>.</p>
+    </div>
+    {% endif %}
+
+    <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment {% if comment.status == 'approved' %}approved{% else %}pending{% endif %}">
+            <div class="comment-header">
+                {% if comment.user.profile_image %}
+                    <img src="{{ comment.user.profile_image.url }}" alt="{{ comment.user.username }}" class="comment-avatar">
+                {% else %}
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ comment.user.username }}" alt="avatar" class="comment-avatar">
+                {% endif %}
+                <div class="comment-info">
+                    <span class="comment-author">
+                        {% if comment.user.first_name %}
+                            {{ comment.user.first_name }} {{ comment.user.last_name }}
+                        {% else %}
+                            {{ comment.user.username }}
+                        {% endif %}
+                    </span>
+                    <span class="comment-date">{{ comment.created_at|jdate:"%Y/%m/%d" }}</span>
+                </div>
+            </div>
+            <div class="comment-content">
+                {{ comment.text }}
+            </div>
+            <div class="comment-actions">
+                <button class="like-button" data-comment-id="{{ comment.id }}">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/msyeyaka.json"
+                            trigger="hover"
+                            state="hover-up"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:35px;height:35px">
+                        </lord-icon>
+                    <span class="likes-count">{{ comment.likes }}</span>
+                </button>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-comments">
+            <p>هنوز نظری ثبت نشده است. اولین نظر را شما ثبت کنید!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="{% static 'static_main/javascript/HotelPost.js' %}"></script>
+{% if hotel.latitude and hotel.longitude %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script>
+    // Initialize map
+    const map = L.map('map').setView([{{ hotel.latitude }}, {{ hotel.longitude }}], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker([{{ hotel.latitude }}, {{ hotel.longitude }}]).addTo(map);
+</script>
+{% endif %}
+<script>
+    // Initialize Swiper
+    console.log('Swiper initialized');
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const swiper = new Swiper('.hotel-swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                effect: 'fade',
+                speed: 1000,
+            });
+            console.log('Swiper configuration:', swiper);
+        } catch (error) {
+            console.error('Error initializing Swiper:', error);
+        }
+    });
+</script>
+{% endblock %}

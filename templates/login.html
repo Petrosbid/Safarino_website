@@ -1,69 +1,87 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="{% static 'static_main/css/auth.css' %}">
-</head>
-<body>
-    <div class="clouds">
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-    </div>
-    
-    <div class="balloon">
-        <div class="envelope"></div>
-        <div class="basket"></div>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="سفرینو - برنامه‌ریزی سفر هوشمند">
+        <title>{% block title %}ثبت نام | ورود{% endblock %}</title>
+        
+        <!-- Common CSS -->
+        <link rel="stylesheet" href="{% static 'static_main/css/footer_header2.css' %}">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+        <script src="{% static 'static_main/javascript/header_footer.js' %}" defer></script>
+        
+        <!-- Page Specific CSS -->
+        <link rel="stylesheet" href="{% static 'static_main/css/auth.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+        
+        <!-- Page Specific JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="{% static 'static_main/javascript/index.js' %}" defer></script>
+    </head>
+    <body>
+        {% include 'base/header.html' %}
+        
+        <div class="page-container">
+            <div class="clouds">
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+                <div class="cloud"></div>
+            </div>
 
-    <div class="error-container">
-        {% if notfound != "" %}
-            <div class="error-message">
+            <div class="balloon">
+                <div class="envelope"></div>
+                <div class="basket"></div>
+            </div>
+
+            <div class="error-container">
+                {% if notfound != "" %}
+                    <div class="error-message">
                         <p>{{ notfound }}</p>
+                    </div>
+                {% endif %}
+                {% if register_form.errors %}
+                    <div class="error-message">
+                        {% for field, errors in register_form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-        {% if register_form.errors %}
-            <div class="error-message">
-                {% for field, errors in register_form.errors.items %}
-                    {% for error in errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
 
-    <div class="main">  	
-		<input type="checkbox" id="chk" aria-hidden="true">
+            <div class="main">
+                <input type="checkbox" id="chk" aria-hidden="true">
 
-			<div class="signup">
-				<form method="post">
-                    {% csrf_token %}
+                <div class="signup">
+                    <form method="post">
+                        {% csrf_token %}
                         <label id="signup" for="chk" aria-hidden="true">ثبت نام</label>
-                            {{ register_form }}
+                        {{ register_form }}
                         <button name="action" value="register">ثبت نام</button>
-				</form>
-			</div>
+                    </form>
+                </div>
 
-			<div class="login">
-				<form method="post">
-                    {% csrf_token %}
+                <div class="login">
+                    <form method="post">
+                        {% csrf_token %}
                         <label for="chk" aria-hidden="true">ورود</label>
-                           {{ login_form }}
-                        <button  name="action" value="login_btn">ورود</button>
-				</form>
-			</div>
-	</div>
-</body>
-</html> 
+                        {{ login_form }}
+                        <button name="action" value="login_btn">ورود</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

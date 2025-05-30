@@ -167,3 +167,6 @@ CKEDITOR_CONFIGS = {
 
 # Silence the CKEditor security warning
 SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
+
+# Login URL for @login_required decorator
+LOGIN_URL = '/login'
