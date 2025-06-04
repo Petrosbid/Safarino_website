@@ -14,10 +14,9 @@ def show_post(request):
     return render(request , 'blog.html' , context)
 
 def blog_post(request , post_id):
-    #post = Post.objects.get(title = post_title)
-    post = get_list_or_404(Post , id = post_id)
-    post[0].views += 1
-    post[0].save()
+    post = get_object_or_404(Post, id=post_id)
+    post.views += 1
+    post.save()
     
     # Get comments for this post
     content_type = ContentType.objects.get_for_model(Post)

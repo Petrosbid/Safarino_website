@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django_daisy',
     'django.contrib.admin',
+    'social_django',
     'django.contrib.humanize',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -167,6 +168,16 @@ CKEDITOR_CONFIGS = {
 
 # Silence the CKEditor security warning
 SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '295807797471-oh53hpusjbk0kprbd88sm55dembdef2f.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
 
 # Login URL for @login_required decorator
 LOGIN_URL = '/login'

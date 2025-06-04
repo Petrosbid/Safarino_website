@@ -527,7 +527,6 @@ body {
     padding-bottom: 100px;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
     gap: 20px;
     width: 100%;
     margin: 0 auto;
@@ -709,7 +708,6 @@ body {
     padding-bottom: 100px;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
     gap: 20px;
     width: 100%;
     margin: 0 auto;

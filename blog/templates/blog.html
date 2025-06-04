@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>{{ post.content|read_time }} دقیقه مطالعه</span>
             </div>
             <div class="blog-title">{{ post.title }}</div>
-            <div class="blog-desc">{{ post.content|truncatewords:20 }}</div>
+            <div class="blog-desc">{{ post.content|striptags|truncatechars:120 }}</div>
             <div class="blog-footer">
                 <div class="author">
                     {% if post.author.profile_image %}

@@ -21,6 +21,8 @@
         <!-- Page Specific JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="{% static 'static_main/javascript/index.js' %}" defer></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
     </head>
     <body>
         {% include 'base/header.html' %}
@@ -79,6 +81,7 @@
                         <label for="chk" aria-hidden="true">ورود</label>
                         {{ login_form }}
                         <button name="action" value="login_btn">ورود</button>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}">ورود با گوگل</a>
                     </form>
                 </div>
             </div>
