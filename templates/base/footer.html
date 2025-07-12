@@ -1,0 +1,51 @@
+{% load static %}
+<footer class="footer" dir="rtl">
+    <div class="footer__content">
+        <div class="footer__section footer__logo-section">
+            <a href="/">
+                <img src="{% static 'static_main/images/logo-website.png' %}" alt="سفرینو" class="footer__logo-img">
+            </a>
+            <p class="footer__description">
+                سفرینو همراه مطمئن سفرهای شماست. کشف کنید، رزرو کنید و از سفر خود لذت ببرید!
+            </p>
+            <div class="footer__social">
+                <a href="#" class="social-link" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link" aria-label="تلگرام"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#" class="social-link" aria-label="لینکدین"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer__section">
+            <h4 class="footer__title">دسترسی سریع</h4>
+            <ul class="footer__links">
+                <li><a href="#">صفحه اصلی</a></li>
+                <li><a href="#">هتل‌ها</a></li>
+                <li><a href="#">تور و سفر</a></li>
+                <li><a href="#">بلاگ</a></li>
+                <li><a href="#">تماس با ما</a></li>
+            </ul>
+        </div>
+        <div class="footer__section">
+            <h4 class="footer__title">ارتباط با ما</h4>
+            <ul class="footer__contact">
+                <li><i class="fas fa-map-marker-alt"></i> تهران، ایران</li>
+                <li><i class="fas fa-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</li>
+                <li><i class="fas fa-envelope"></i> info@safarino.com</li>
+            </ul>
+        </div>
+        <div class="footer__section">
+            <h4 class="footer__title">عضویت در خبرنامه</h4>
+            <p class="footer__newsletter-text">برای دریافت آخرین اخبار و پیشنهادات ویژه، ایمیل خود را وارد کنید.</p>
+            <form class="footer__newsletter-form">
+                <input type="email" placeholder="ایمیل شما" required>
+                <button type="submit">عضویت</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <p class="footer__copyright">
+            &copy; {{ now|date:"Y" }} سفرینو. تمامی حقوق محفوظ است.
+        </p>
+    </div>
+</footer>
+<!-- Font Awesome CDN for icons (add in your base template if not already included) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 

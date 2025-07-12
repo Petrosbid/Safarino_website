@@ -1,0 +1,113 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}برنامه سفر - سفرینو{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'static_main/css/trip_plan.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="trip-plan-container">
+    <!-- Trip Summary Section -->
+    <div class="trip-summary" style="background-image: url('{% static 'static_main/images/58513834_9376733.jpg' %}');
+                             background-repeat: no-repeat;
+                             background-position: center;
+                             background-size: cover;">
+        <h1>برنامه سفر شما</h1>
+        <div class="trip-details">
+            <div class="detail-item">
+                <lord-icon src="https://cdn.lordicon.com/zzcjjxew.json" trigger="hover" colors="primary:#121331,secondary:#08a88a" style="width:32px;height:32px"></lord-icon>
+                <span>{{ trip_duration }}</span>
+            </div>
+            <div class="detail-item">
+                <lord-icon src="https://cdn.lordicon.com/etwtznjn.json" trigger="hover" colors="primary:#121331,secondary:#08a88a" style="width:32px;height:32px"></lord-icon>
+                <span>{{ trip_budget }}</span>
+            </div>
+            <div class="detail-item">
+                <lord-icon src="https://cdn.lordicon.com/zzcjjxew.json" trigger="hover" colors="primary:#121331,secondary:#08a88a" style="width:32px;height:32px"></lord-icon>
+                <span>{{ trip_companion }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Itinerary Section -->
+    <div class="itinerary-section">
+        <h2>برنامه روزانه</h2>
+        <div class="itinerary-container">
+            {% for day in itinerary %}
+            <div class="day-plan">
+                <h3>{{ day.title }}</h3>
+                <div class="activities">
+                    {% for activity in day.activities %}
+                    <div class="activity-card">
+                        <div class="activity-time">{{ activity.time }}</div>
+                        <div class="activity-image">
+                            <img src="{{ activity.image_url }}" alt="{{ activity.title }}">
+                        </div>
+                        <div class="activity-info">
+                            <h4>{{ activity.title }}</h4>
+                            <div class="activity-likes">
+                                <i class="fas fa-heart"></i>
+                                <span>{{ activity.likes }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recommended Hotels Section -->
+    <div class="recommendations-section">
+        <h2>هتل‌های پیشنهادی</h2>
+        <div class="hotels-container">
+            {% for hotel in recommended_hotels %}
+            <div class="hotel-card">
+                <div class="hotel-image">
+                    <img src="https://panel.worldgds.com/client/img/hotel/1639/67bd753de54a2.jpg" alt="{{ hotel.name }}">
+                    <div class="hotel-rating">
+                        <i class="fas fa-star"></i>
+                        <span>{{ hotel.rating }}</span>
+                    </div>
+                </div>
+                <div class="hotel-info">
+                    <h3>هتل جهانگردی</h3>
+                    <div class="hotel-stars">
+                        {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= hotel.stars %}
+                            <i class="fas fa-star"></i>
+                            {% else %}
+                            <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p class="hotel-price">7 میلیون تومان در شب</p>
+                    <p class="hotel-description">{{ hotel.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recommended Tours Section -->
+    <div class="recommendations-section">
+        <h2>تورهای پیشنهادی</h2>
+        <div class="tours-container" id="tours-container">
+            <!-- Tours will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="btn-save" id="save-trip">ذخیره برنامه سفر</button>
+        <button class="btn-modify" id="modify-trip">اصلاح برنامه</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'static_main/javascript/trip_plan.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="about-container" dir="rtl">
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="hero-content">
+            <h1 class="animate-on-scroll">درباره سفری‌نو</h1>
+            <p class="animate-on-scroll">سفری به سوی خاطرات فراموش نشدنی</p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <h2 class="animate-on-scroll">ماموریت ما</h2>
+                <p class="animate-on-scroll">ما در سفری‌نو با هدف ایجاد تجربه‌های سفر منحصر به فرد و به یاد ماندنی، در کنار شما هستیم. ما معتقدیم که هر سفر باید یک داستان منحصر به فرد باشد.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>برنامه‌ریزی هوشمند</h3>
+                    <p>برنامه‌ریزی سفر با هوش مصنوعی و تجربه کاربری برتر</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-hotel"></i>
+                    <h3>رزرو هتل</h3>
+                    <p>انتخاب و رزرو بهترین هتل‌ها با قیمت‌های مناسب</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-route"></i>
+                    <h3>مسیریابی</h3>
+                    <p>بهترین مسیرها و جاذبه‌های گردشگری</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">تیم ما</h2>
+            <div class="team-grid">
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <img src="{% static 'images/team/member1.jpg' %}" alt="عضو تیم">
+                    </div>
+                    <h3>علی محمدی</h3>
+                    <p>مدیر ارشد</p>
+                </div>
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <img src="{% static 'images/team/member2.jpg' %}" alt="عضو تیم">
+                    </div>
+                    <h3>سارا احمدی</h3>
+                    <p>مدیر فنی</p>
+                </div>
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <img src="{% static 'images/team/member3.jpg' %}" alt="عضو تیم">
+                    </div>
+                    <h3>محمد رضایی</h3>
+                    <p>مدیر محصول</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .about-container {
+        font-family: 'Vazir', sans-serif;
+    }
+
+    .about-hero {
+        height: 60vh;
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static "images/about-hero.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+    }
+
+    .hero-content p {
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease 0.2s;
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .mission-section {
+        padding: 5rem 0;
+        background-color: #f8f9fa;
+    }
+
+    .mission-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .features-section {
+        padding: 5rem 0;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .feature-card {
+        text-align: center;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .feature-card i {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+
+    .team-section {
+        padding: 5rem 0;
+        background-color: #f8f9fa;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .team-member {
+        text-align: center;
+    }
+
+    .member-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 1rem;
+    }
+
+    .member-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+    });
+</script>
+{% endblock %} 

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="سفرینو - برنامه‌ریزی سفر هوشمند">
+        <title>{% block title %}سفرینو - برنامه‌ریزی سفر{% endblock %}</title>
+        
+        <!-- Common CSS -->
+        <link rel="stylesheet" href="{% static 'static_main/css/footer_header2.css' %}">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+        <script src="{% static 'static_main/javascript/header_footer.js' %}" defer></script>
+        
+        <!-- Page Specific CSS -->
+        {% block extra_css %}{% endblock %}
+        
+        <!-- Page Specific JS -->
+        {% block extra_js %}{% endblock %}
+    </head>
+    <body>
+        {% include 'base/header.html' %}
+        
+        <div class="page-container" style="width: 100%">
+            {% block content %}{% endblock %}
+        </div>
+        
+        {% include 'base/footer.html' %}
+    </body>
+</html> 

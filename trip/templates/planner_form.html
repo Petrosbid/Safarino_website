@@ -1,0 +1,381 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}برنامه‌ریزی سفر - سفرینو{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'static_main/css/planner_form.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'static_main/javascript/planner_form.js' %}" ></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="planner-container">
+    <div class="planner-header" style="
+     background-image: url('{% static 'static_main/images/top-view-essential-travel-items-shoes-notebook-tree-map-pass-compressed.jpg' %}');
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: cover;">
+        <h1>برنامه‌ریزی سفر</h1>
+        <p>با پاسخ به چند سوال ساده، برنامه سفر خود را دریافت کنید</p>
+    </div>
+
+    <form class="planner-form" method="POST" action="{% url 'trip:planner_form' %}">
+        {% csrf_token %}
+        
+        <!-- Step 1: Location Selection -->
+        <div class="form-step active" data-step="1">
+            <h2>به کجا سفر می‌کنید؟</h2>
+            <div class="location-selection">
+                <div class="select-group">
+                    <label for="province">استان:</label>
+                    <select id="province" name="province" required>
+                        <option value="">انتخاب استان</option>
+                    </select>
+                </div>
+                <div class="select-group">
+                    <label for="city">شهر:</label>
+                    <select id="city" name="city" required disabled>
+                        <option value="">ابتدا استان را انتخاب کنید</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Travel Companions -->
+        <div class="form-step" data-step="2">
+            <h2>با کی سفر می‌کنید؟</h2>
+            <div class="companion-options">
+                <label class="companion-option">
+                    <input type="radio" name="companion" value="alone" required>
+                    <div class="option-content">
+                        <i class="fas fa-user"></i>
+                        <span>تنهایی</span>
+                    </div>
+                </label>
+                <label class="companion-option">
+                    <input type="radio" name="companion" value="partner">
+                    <div class="option-content">
+                        <i class="fas fa-heart"></i>
+                        <span>پارتنر</span>
+                    </div>
+                </label>
+                <label class="companion-option">
+                    <input type="radio" name="companion" value="friends">
+                    <div class="option-content">
+                        <i class="fas fa-users"></i>
+                        <span>دوستان</span>
+                    </div>
+                </label>
+                <label class="companion-option">
+                    <input type="radio" name="companion" value="family">
+                    <div class="option-content">
+                        <i class="fas fa-home"></i>
+                        <span>خانوادگی</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 3: Number of Travelers -->
+        <div class="form-step" data-step="3">
+            <h2>تعداد مسافران</h2>
+            <div class="travelers-grid">
+                <div class="traveler-group">
+                    <label>بزرگسالان (12 سال به بالا)</label>
+                    <div class="number-input-group">
+                        <button type="button" class="number-btn minus" data-target="adults">-</button>
+                        <input type="number" name="adults" id="adults" value="1" min="1" max="10" readonly>
+                        <button type="button" class="number-btn plus" data-target="adults">+</button>
+                    </div>
+                </div>
+                <div class="traveler-group">
+                    <label>کودکان (2 تا 12 سال)</label>
+                    <div class="number-input-group">
+                        <button type="button" class="number-btn minus" data-target="children">-</button>
+                        <input type="number" name="children" id="children" value="0" min="0" max="5" readonly>
+                        <button type="button" class="number-btn plus" data-target="children">+</button>
+                    </div>
+                </div>
+                <div class="traveler-group">
+                    <label>نوزادان (کمتر از 2 سال)</label>
+                    <div class="number-input-group">
+                        <button type="button" class="number-btn minus" data-target="infants">-</button>
+                        <input type="number" name="infants" id="infants" value="0" min="0" max="3" readonly>
+                        <button type="button" class="number-btn plus" data-target="infants">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Transportation -->
+        <div class="form-step" data-step="4">
+            <h2>نحوه سفر</h2>
+            <div class="transport-options">
+                <label class="transport-option">
+                    <input type="radio" name="transportation" value="plane" required>
+                    <div class="option-content">
+                        <i class="fas fa-plane"></i>
+                        <span>هواپیما</span>
+                    </div>
+                </label>
+                <label class="transport-option">
+                    <input type="radio" name="transportation" value="train">
+                    <div class="option-content">
+                        <i class="fas fa-train"></i>
+                        <span>قطار</span>
+                    </div>
+                </label>
+                <label class="transport-option">
+                    <input type="radio" name="transportation" value="bus">
+                    <div class="option-content">
+                        <i class="fas fa-bus"></i>
+                        <span>اتوبوس</span>
+                    </div>
+                </label>
+                <label class="transport-option">
+                    <input type="radio" name="transportation" value="car">
+                    <div class="option-content">
+                        <i class="fas fa-car"></i>
+                        <span>خودرو شخصی</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 5: Accommodation -->
+        <div class="form-step" data-step="5">
+            <h2>محل اقامت</h2>
+            <div class="accommodation-options">
+                <label class="accommodation-option">
+                    <input type="radio" name="accommodation" value="hotel" required>
+                    <div class="option-content">
+                        <i class="fas fa-hotel"></i>
+                        <span>هتل</span>
+                    </div>
+                </label>
+                <label class="accommodation-option">
+                    <input type="radio" name="accommodation" value="apartment">
+                    <div class="option-content">
+                        <i class="fas fa-building"></i>
+                        <span>آپارتمان</span>
+                    </div>
+                </label>
+                <label class="accommodation-option">
+                    <input type="radio" name="accommodation" value="hostel">
+                    <div class="option-content">
+                        <i class="fas fa-bed"></i>
+                        <span>هاستل</span>
+                    </div>
+                </label>
+                <label class="accommodation-option">
+                    <input type="radio" name="accommodation" value="own">
+                    <div class="option-content">
+                        <i class="fas fa-home"></i>
+                        <span>محل اقامت شخصی</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 6: Dining -->
+        <div class="form-step" data-step="6">
+            <h2>وعده‌های غذایی</h2>
+            <div class="dining-options">
+                <label class="dining-option">
+                    <input type="checkbox" name="dining" value="restaurant">
+                    <div class="option-content">
+                        <i class="fas fa-utensils"></i>
+                        <span>رستوران</span>
+                    </div>
+                </label>
+                <label class="dining-option">
+                    <input type="checkbox" name="dining" value="cafe">
+                    <div class="option-content">
+                        <i class="fas fa-coffee"></i>
+                        <span>کافه</span>
+                    </div>
+                </label>
+                <label class="dining-option">
+                    <input type="checkbox" name="dining" value="street_food">
+                    <div class="option-content">
+                        <i class="fas fa-hamburger"></i>
+                        <span>غذای خیابانی</span>
+                    </div>
+                </label>
+                <label class="dining-option">
+                    <input type="checkbox" name="dining" value="cooking">
+                    <div class="option-content">
+                        <i class="fas fa-egg"></i>
+                        <span>پخت و پز</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 7: Daily Activities -->
+        <div class="form-step" data-step="7">
+            <h2>تعداد مکان‌های مورد بازدید در روز</h2>
+            <div class="activities-options">
+                <label class="activity-option">
+                    <input type="radio" name="daily_activities" value="1-2" required>
+                    <div class="option-content">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>1 تا 2 مکان</span>
+                        <small>سفر آرام و تفریحی</small>
+                    </div>
+                </label>
+                <label class="activity-option">
+                    <input type="radio" name="daily_activities" value="3-4">
+                    <div class="option-content">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>3 تا 4 مکان</span>
+                        <small>سفر معمولی</small>
+                    </div>
+                </label>
+                <label class="activity-option">
+                    <input type="radio" name="daily_activities" value="5+">
+                    <div class="option-content">
+                        <i class="fas fa-route"></i>
+                        <span>5 مکان یا بیشتر</span>
+                        <small>سفر فشرده</small>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 8: Budget -->
+        <div class="form-step" data-step="8">
+            <h2>بودجه سفر شما چقدر است؟</h2>
+            <div class="budget-options">
+                <label class="budget-option">
+                    <input type="radio" name="budget" value="low" required>
+                    <div class="option-content">
+                        <i class="fas fa-coins"></i>
+                        <span>کم</span>
+                    </div>
+                </label>
+                <label class="budget-option">
+                    <input type="radio" name="budget" value="medium">
+                    <div class="option-content">
+                        <i class="fas fa-coins"></i>
+                        <span>متوسط</span>
+                    </div>
+                </label>
+                <label class="budget-option">
+                    <input type="radio" name="budget" value="high">
+                    <div class="option-content">
+                        <i class="fas fa-coins"></i>
+                        <span>زیاد</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 9: Interests -->
+        <div class="form-step" data-step="9">
+            <h2>به چه مکان‌هایی علاقه دارید؟</h2>
+            <div class="interests-grid">
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="historical">
+                    <div class="option-content">
+                        <i class="fas fa-landmark"></i>
+                        <span>تاریخی</span>
+                    </div>
+                </label>
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="nature">
+                    <div class="option-content">
+                        <i class="fas fa-mountain"></i>
+                        <span>طبیعت</span>
+                    </div>
+                </label>
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="shopping">
+                    <div class="option-content">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>خرید</span>
+                    </div>
+                </label>
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="food">
+                    <div class="option-content">
+                        <i class="fas fa-utensils"></i>
+                        <span>غذا</span>
+                    </div>
+                </label>
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="photography">
+                    <div class="option-content">
+                        <i class="fas fa-camera"></i>
+                        <span>عکاسی</span>
+                    </div>
+                </label>
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="adventure">
+                    <div class="option-content">
+                        <i class="fas fa-hiking"></i>
+                        <span>ماجراجویی</span>
+                    </div>
+                </label>
+                <label class="interest-option">
+                    <input type="checkbox" name="interests" value="culture">
+                    <div class="option-content">
+                        <i class="fas fa-theater-masks"></i>
+                        <span>فرهنگی</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 10: Travel Dates -->
+        <div class="form-step" data-step="10">
+            <h2>چه زمانی قصد سفر دارید؟</h2>
+            <p class="date-range-desc">یک بازه زمانی انتخاب کنید</p>
+            <div class="date-picker-wrapper">
+                <div class="date-picker-container">
+                    <div class="date-input-group">
+                        <label for="start-date-input">تاریخ شروع:</label>
+                        <div class="date-input-wrapper">
+                            <input type="text" id="start-date-input" class="persian-date" readonly placeholder="انتخاب تاریخ شروع">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                    <div class="date-input-group">
+                        <label for="end-date-input">تاریخ پایان:</label>
+                        <div class="date-input-wrapper">
+                            <input type="text" id="end-date-input" class="persian-date" readonly placeholder="انتخاب تاریخ پایان">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="start_date" id="start_date">
+            <input type="hidden" name="end_date" id="end_date">
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="form-navigation">
+            <button type="button" class="nav-button prev-button" disabled>
+                <i class="fas fa-arrow-right"></i>
+                مرحله قبل
+            </button>
+            <button type="button" class="nav-button next-button">
+                مرحله بعد
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button type="submit" class="submit-button" style="display: none;">
+                دریافت برنامه سفر
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %} 

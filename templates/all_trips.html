@@ -1,0 +1,232 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}همه سفرها{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'static_main/css/user_dashbord.css' %}">
+<link rel="stylesheet" href="{% static 'static_main/css/all_trips.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+<div class="dashboard-container">
+        <aside class="sidebar">
+                        <div class="user-info">
+                        {% if user.profile_picture %}
+                            <img class="user-avatar" src="{{ user.profile_picture.url }}" alt="{{ user.username }}">
+                        {% else %}
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ user.username }}" alt="avatar">
+                        {% endif %}
+                            <span class="user-name">
+                                {% if user.first_name %}
+                                    {{ user.first_name }} {{ user.last_name }}
+                                {% else %}
+                                    {{ user.username }}
+                                {% endif %}
+                            </span>
+                            <span class="user-role">کاربر</span>
+                        </div>
+
+
+                        <a href="/trip/planner/">
+                            <button class="new-trip-btn">
+                                سفر جدید +
+                            </button>
+                        </a>
+
+                        <nav class="main-nav">
+                            <ul>
+                                <li class="nav-item">
+                                    <a href="{% url 'user_dashboard' %}">
+                                        <lord-icon
+                                            src="https://cdn.lordicon.com/jeuxydnh.json"
+                                            trigger="hover"
+                                            stroke="bold"
+                                            state="hover-partial-roll"
+                                            colors="primary:#121331,secondary:#2b4162"
+                                            style="width:35px;height:35px">
+                                        </lord-icon>
+                                        <span class="nav-text">خانه</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a href="{% url 'active_trip' %}">
+                                        <lord-icon
+                                            src="https://cdn.lordicon.com/onmwuuox.json"
+                                            trigger="hover"
+                                            stroke="bold"
+                                            state="hover-jump-roll"
+                                            colors="primary:#121331,secondary:#2b4162"
+                                            style="width:35px;height:35px">
+                                        </lord-icon>
+                                        <span class="nav-text">سفر فعال</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a href="{% url 'all_trips' %}">
+                                        <lord-icon
+                                            src="https://cdn.lordicon.com/pkxwrmde.json"
+                                            trigger="hover"
+                                            stroke="bold"
+                                            colors="primary:#121331,secondary:#2b4162"
+                                            style="width:35px;height:35px">
+                                        </lord-icon>
+                                        <span class="nav-text">همه سفرها</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <form method="post" action="{% url 'logout' %}" style="margin: 0; padding: 0;">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background: none; border: none; width: 100%; text-align: right; cursor: pointer; display: flex; align-items: center; padding: 0.7rem 1rem; color: var(--text-light); text-decoration: none; border-radius: var(--border-radius-md); transition: all 0.3s ease; font-size: 0.95rem;">
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/vfiwitrm.json"
+                                                trigger="hover"
+                                                stroke="bold"
+                                                colors="primary:#121331,secondary:#2b4162"
+                                                style="width:35px;height:35px">
+                                            </lord-icon>
+                                            <span class="nav-text">خروج از حساب کاربری</span>
+                                        </button>
+                                    </form>
+                                </li>
+
+
+                            </ul>
+                        </nav>
+
+                        {% comment %} <div class="sidebar-bottom">
+                            <div class="weather-widget">
+                                <div class="weather-icon">☀️</div>
+                                <div class="weather-info">
+                                    <span class="temp">۳۰°</span>
+                                    <span class="location">رم</span>
+                                </div>
+                                <div class="weather-forecast">
+                                    <!-- Placeholder for forecast -->
+                                    <span>Mon</span> <span>Tue</span> <span>Wed</span> <span>Thu</span> <span>Fri</span>
+                                    <span>۳۱°</span> <span>۲۹°</span> <span>۳۳°</span> <span>۲۸°</span> <span>۳۲°</span>
+                                </div>
+                            </div>
+
+
+                        </div> {% endcomment %}
+                    </aside>
+        <main class="main-content">
+        <section class="content-area">
+            <div class="all-trips-container">
+                <div class="trips-header">
+                    <h2>تاریخچه سفرها</h2>
+                    <div class="trips-filter">
+                        <select id="status-filter" class="filter-select">
+                            <option value="all">همه سفرها</option>
+                            <option value="running">در حال انجام</option>
+                            <option value="finished">پایان یافته</option>
+                            <option value="canceled">لغو شده</option>
+                        </select>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="newest">جدیدترین</option>
+                            <option value="oldest">قدیمی‌ترین</option>
+                            <option value="duration">مدت زمان</option>
+                        </select>
+                    </div>
+                </div>
+
+                {% if trips %}
+                    <div class="trips-grid">
+                        {% for trip in trips %}
+                            <div class="trip-card" data-status="{{ trip.status }}">
+                                <div class="trip-card-header">
+                                    <h3>{{ trip.trip_type }}</h3>
+                                    <span class="trip-status {{ trip.status }}">{{ trip.get_status_display }}</span>
+                                </div>
+                                <div class="trip-card-body">
+                                    <div class="trip-info">
+                                        <div class="info-item">
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/jeuxydnh.json"
+                                                trigger="hover"
+                                                stroke="bold"
+                                                colors="primary:#121331,secondary:#2b4162"
+                                                style="width:25px;height:25px">
+                                            </lord-icon>
+                                            <span>{{ trip.places_of_interest }}</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/onmwuuox.json"
+                                                trigger="hover"
+                                                stroke="bold"
+                                                colors="primary:#121331,secondary:#2b4162"
+                                                style="width:25px;height:25px">
+                                            </lord-icon>
+                                            <span>{{ trip.start_date|date:"Y/m/d" }} - {{ trip.end_date|date:"Y/m/d" }}</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/pkxwrmde.json"
+                                                trigger="hover"
+                                                stroke="bold"
+                                                colors="primary:#121331,secondary:#2b4162"
+                                                style="width:25px;height:25px">
+                                            </lord-icon>
+                                            <span>{{ trip.people_count }} نفر</span>
+                                        </div>
+                                    </div>
+                                    <div class="trip-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: {{ trip.progress }}%"></div>
+                                        </div>
+                                        <span class="progress-text">{{ trip.progress }}% تکمیل شده</span>
+                                    </div>
+                                </div>
+                                <div class="trip-card-footer">
+                                    <a href="{% url 'trip:plan_detail' trip.id %}" class="view-details-btn">
+                                        مشاهده جزئیات
+                                        <lord-icon
+                                            src="https://cdn.lordicon.com/wsaaegar.json"
+                                            trigger="hover"
+                                            stroke="bold"
+                                            colors="primary:#ffffff,secondary:#ffffff"
+                                            style="width:20px;height:20px">
+                                        </lord-icon>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-trips-message">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/pkxwrmde.json"
+                            trigger="hover"
+                            stroke="bold"
+                            colors="primary:#121331,secondary:#2b4162"
+                            style="width:100px;height:100px">
+                        </lord-icon>
+                        <h2>شما هنوز سفری ثبت نکرده‌اید</h2>
+                        <p>برای شروع یک سفر جدید، روی دکمه زیر کلیک کنید</p>
+                        <a href="{% url 'trip:planner_form' %}" class="new-trip-btn">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/wsaaegar.json"
+                                trigger="hover"
+                                stroke="bold"
+                                colors="primary:#ffffff,secondary:#ffffff"
+                                style="width:25px;height:25px">
+                            </lord-icon>
+                            برنامه‌ریزی سفر جدید
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'javascript/user_dashbord.js' %}"></script>
+<script src="{% static 'javascript/all_trips.js' %}"></script>
+{% endblock %} 

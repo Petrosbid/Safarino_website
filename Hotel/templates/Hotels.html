@@ -1,0 +1,449 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load extrass %}
+
+{% block title %}هتل‌ها | سفرینو{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+    font-family: 'Dana','PeydaWeb' ,'mahoor', sans-serif;
+}
+
+.hotel-hero {
+    text-align: center;
+    margin: 7rem 0 3rem 0;
+    animation: fadeInDown 1s;
+    height: 75.4vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-top: -100px;
+    margin-bottom: 100px;
+}
+.hotel-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Dark overlay with 50% opacity */
+    z-index: 1;
+    height: 62.8vh;
+}
+.hotel-hero h1 {
+    font-size: 2.7rem;
+    color: #2b4162;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.hotel-hero p {
+    color: #4f5d75;
+    font-size: 1.2rem;
+}
+
+.search-filter-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    animation: fadeInUp 1s;
+}
+
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ef;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #1b9aaa;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(27, 154, 170, 0.1);
+}
+
+.filter-bar {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ef;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.filter-select:focus {
+    border-color: #1b9aaa;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(27, 154, 170, 0.1);
+}
+
+.hotel-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.hotel-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+    animation: fadeInUp 1s;
+}
+
+.hotel-card:hover {
+    transform: translateY(-12px) scale(1.03) rotate(-1deg);
+    box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.18);
+}
+
+.hotel-image {
+    width: 100%;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hotel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+}
+
+.hotel-card:hover .hotel-image img {
+    transform: scale(1.08) rotate(1deg);
+}
+
+.hotel-rating {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #2b4162;
+}
+
+.hotel-rating i {
+    color: #ffd700;
+}
+
+.hotel-content {
+    padding: 1.5rem;
+}
+
+.hotel-title {
+    font-size: 1.4rem;
+    color: #2b4162;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.hotel-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4f5d75;
+    margin-bottom: 1rem;
+}
+
+.hotel-location i {
+    color: #1b9aaa;
+}
+
+.hotel-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.amenity {
+    background: #f8fafc;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #4f5d75;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.amenity i {
+    color: #1b9aaa;
+}
+
+.hotel-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e7ef;
+}
+
+.hotel-price {
+    font-size: 1.3rem;
+    color: #2b4162;
+    font-weight: 600;
+}
+
+.hotel-price span {
+    font-size: 0.9rem;
+    color: #4f5d75;
+    font-weight: normal;
+}
+
+.view-details-btn {
+    background: linear-gradient(90deg, #1b9aaa 0%, #2b4162 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.view-details-btn:hover {
+    background: linear-gradient(90deg, #2b4162 0%, #1b9aaa 100%);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .hotel-list {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+    }
+    
+    .filter-bar {
+        flex-direction: column;
+    }
+    
+    .filter-select {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hotel-hero animate__animated animate__fadeInDown" style="background-image: url('{% static 'static_main/images/36242091_8316271.jpg' %}');">
+    <h1>هتل‌های برتر</h1>
+    <p>بهترین هتل‌ها را با بهترین قیمت‌ها پیدا کنید</p>
+</div>
+
+<div class="search-filter-container">
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="جستجوی هتل، شهر یا منطقه...">
+        <button class="view-details-btn">
+            <i class="fas fa-search"></i>
+            جستجو
+        </button>
+    </div>
+    
+    <div class="filter-bar">
+        <select class="filter-select" id="city-filter">
+            <option value="">همه شهرها</option>
+            <option value="tehran">تهران</option>
+            <option value="mashhad">مشهد</option>
+            <option value="shiraz">شیراز</option>
+            <option value="esfahan">اصفهان</option>
+        </select>
+        
+        <select class="filter-select" id="price-filter">
+            <option value="">محدوده قیمت</option>
+            <option value="budget">اقتصادی</option>
+            <option value="mid-range">متوسط</option>
+            <option value="luxury">لوکس</option>
+        </select>
+        
+        <select class="filter-select" id="rating-filter">
+            <option value="">امتیاز هتل</option>
+            <option value="5">۵ ستاره</option>
+            <option value="4">۴ ستاره</option>
+            <option value="3">۳ ستاره</option>
+            <option value="2">۲ ستاره</option>
+        </select>
+        
+        <select class="filter-select" id="amenities-filter">
+            <option value="">امکانات</option>
+            <option value="pool">استخر</option>
+            <option value="spa">اسپا</option>
+            <option value="gym">باشگاه ورزشی</option>
+            <option value="restaurant">رستوران</option>
+        </select>
+    </div>
+</div>
+
+<div class="hotel-list">
+    {% for hotel in hotels %}
+    <div class="hotel-card animate__animated animate__fadeInUp">
+        <div class="hotel-image">
+            {% if hotel.image %}
+                <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+            {% else %}
+                <img src="https://source.unsplash.com/400x300/?hotel,luxury" alt="هتل">
+            {% endif %}
+            <div class="hotel-rating">
+                <i class="fas fa-star"></i>
+                <span>{{ hotel.rating }}</span>
+            </div>
+        </div>
+        
+        <div class="hotel-content">
+            <h3 class="hotel-title">{{ hotel.name }}</h3>
+            <div class="hotel-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ hotel.city }}, {{ hotel.address }}</span>
+            </div>
+            
+            <div class="hotel-amenities">
+                {% if hotel.has_pool %}
+                <span class="amenity">
+                    <i class="fas fa-swimming-pool"></i>
+                    استخر
+                </span>
+                {% endif %}
+                {% if hotel.has_spa %}
+                <span class="amenity">
+                    <i class="fas fa-spa"></i>
+                    اسپا
+                </span>
+                {% endif %}
+                {% if hotel.has_gym %}
+                <span class="amenity">
+                    <i class="fas fa-dumbbell"></i>
+                    باشگاه
+                </span>
+                {% endif %}
+                {% if hotel.has_restaurant %}
+                <span class="amenity">
+                    <i class="fas fa-utensils"></i>
+                    رستوران
+                </span>
+                {% endif %}
+            </div>
+            
+            <div class="hotel-footer">
+                <div class="hotel-price">
+                    {{ hotel.price_per_night }}<span> تومان / شب</span>
+                </div>
+                <a href="{% url 'hotel:hotel_post' hotel.id %}" class="view-details-btn">
+                    مشاهده جزئیات
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-hotels-message">
+        <lord-icon
+            src="https://cdn.lordicon.com/pkxwrmde.json"
+            trigger="hover"
+            stroke="bold"
+            colors="primary:#121331,secondary:#2b4162"
+            style="width:100px;height:100px">
+        </lord-icon>
+        <h2>هتلی یافت نشد</h2>
+        <p>لطفا فیلترهای جستجو را تغییر دهید</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tilt effect
+    VanillaTilt.init(document.querySelectorAll('.hotel-card'), {
+        max: 8,
+        speed: 400,
+        glare: true,
+        'max-glare': 0.18
+    });
+
+    // Search and filter functionality
+    const searchInput = document.querySelector('.search-input');
+    const cityFilter = document.getElementById('city-filter');
+    const priceFilter = document.getElementById('price-filter');
+    const ratingFilter = document.getElementById('rating-filter');
+    const amenitiesFilter = document.getElementById('amenities-filter');
+    const hotelCards = document.querySelectorAll('.hotel-card');
+
+    function filterHotels() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCity = cityFilter.value;
+        const selectedPrice = priceFilter.value;
+        const selectedRating = ratingFilter.value;
+        const selectedAmenity = amenitiesFilter.value;
+
+        hotelCards.forEach(card => {
+            const hotelName = card.querySelector('.hotel-title').textContent.toLowerCase();
+            const hotelCity = card.querySelector('.hotel-location').textContent.toLowerCase();
+            const hotelRating = card.querySelector('.hotel-rating span').textContent;
+            const hotelAmenities = Array.from(card.querySelectorAll('.amenity')).map(a => a.textContent.trim().toLowerCase());
+
+            const matchesSearch = hotelName.includes(searchTerm) || hotelCity.includes(searchTerm);
+            const matchesCity = !selectedCity || hotelCity.includes(selectedCity);
+            const matchesRating = !selectedRating || hotelRating >= selectedRating;
+            const matchesAmenity = !selectedAmenity || hotelAmenities.some(a => a.includes(selectedAmenity));
+
+            if (matchesSearch && matchesCity && matchesRating && matchesAmenity) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Add event listeners
+    searchInput.addEventListener('input', filterHotels);
+    cityFilter.addEventListener('change', filterHotels);
+    priceFilter.addEventListener('change', filterHotels);
+    ratingFilter.addEventListener('change', filterHotels);
+    amenitiesFilter.addEventListener('change', filterHotels);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,282 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load extras %}
+
+{% block title %}مکان‌های گردشگری | سفرینو{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+    font-family: 'Dana','PeydaWeb' ,'mahoor', sans-serif;
+}
+.places-hero {
+    text-align: center;
+    margin: 7rem 0 3rem 0;
+    animation: fadeInDown 1s;
+}
+.places-hero h1 {
+    font-size: 2.7rem;
+    color: #2b4162;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+.places-hero p {
+    color: #4f5d75;
+    font-size: 1.2rem;
+}
+.places-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+.place-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    overflow: hidden;
+    width: 340px;
+    transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+    position: relative;
+    cursor: pointer;
+    animation: fadeInUp 1s;
+}
+.place-card:hover {
+    transform: translateY(-12px) scale(1.03) rotate(-1deg);
+    box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.18);
+}
+.place-card .place-image {
+    width: 100%;
+    height: 200px;
+    background: #e0e7ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+.place-card .place-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+}
+.place-card:hover .place-image img {
+    transform: scale(1.08) rotate(1deg);
+}
+.place-card .place-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.95rem;
+    color: #7b8794;
+    margin: 1rem 1.2rem 0.5rem 1.2rem;
+}
+.place-card .place-meta .dot {
+    width: 6px;
+    height: 6px;
+    background: #a0aec0;
+    border-radius: 50%;
+    display: inline-block;
+}
+.place-card .place-title {
+    font-size: 1.3rem;
+    color: #2b4162;
+    font-weight: 600;
+    margin: 0.7rem 1.2rem 0.5rem 1.2rem;
+    min-height: 48px;
+    transition: color 0.3s;
+}
+.place-card:hover .place-title {
+    color: #1b9aaa;
+}
+.place-card .place-desc {
+    color: #4f5d75;
+    font-size: 1.05rem;
+    margin: 0 1.2rem 1.2rem 1.2rem;
+    min-height: 60px;
+}
+.place-card .place-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1.2rem 1.2rem 1.2rem;
+}
+.place-card .place-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.place-card .place-info .score {
+    background: linear-gradient(90deg, #1b9aaa 0%, #2b4162 100%);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 500;
+}
+.place-card .place-info .budget {
+    color: #2b4162;
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+.place-card .read-more {
+    background: linear-gradient(90deg, #1b9aaa 0%, #2b4162 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 2px 8px rgba(27, 154, 170, 0.08);
+}
+.place-card .read-more:hover {
+    background: linear-gradient(90deg, #2b4162 0%, #1b9aaa 100%);
+}
+@media (max-width: 900px) {
+    .places-list { flex-direction: column; align-items: center; }
+    .place-card { width: 95vw; max-width: 400px; }
+}
+
+.search-section {
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    animation: fadeInUp 1s;
+}
+.search-form {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ef;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2b4162;
+    transition: border-color 0.3s;
+}
+.search-input:focus {
+    outline: none;
+    border-color: #1b9aaa;
+}
+.search-select {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ef;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2b4162;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+.search-select:focus {
+    outline: none;
+    border-color: #1b9aaa;
+}
+.search-button {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(90deg, #1b9aaa 0%, #2b4162 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(27, 154, 170, 0.2);
+}
+.search-button:active {
+    transform: translateY(0);
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    VanillaTilt.init(document.querySelectorAll('.place-card'), {
+        max: 8,
+        speed: 400,
+        glare: true,
+        'max-glare': 0.18
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="places-hero animate__animated animate__fadeInDown">
+    <h1>مکان‌های گردشگری</h1>
+    <p>بهترین و جذاب‌ترین مکان‌های گردشگری ایران را اینجا ببینید.</p>
+</div>
+
+<div class="search-section">
+    <form method="GET" action="{% url 'place:places_list' %}" class="search-form">
+        <input type="text" name="q" class="search-input" placeholder="جستجو در مکان‌ها..." value="{{ request.GET.q }}">
+        <select name="type" class="search-select">
+            <option value="">همه انواع</option>
+            <option value="جنگلی" {% if request.GET.type == 'جنگلی' %}selected{% endif %}>جنگلی</option>
+            <option value="کویری" {% if request.GET.type == 'کویری' %}selected{% endif %}>کویری</option>
+            <option value="ساحلی" {% if request.GET.type == 'ساحلی' %}selected{% endif %}>ساحلی</option>
+            <option value="تاریخی" {% if request.GET.type == 'تاریخی' %}selected{% endif %}>تاریخی</option>
+        </select>
+        <select name="cost" class="search-select">
+            <option value="">همه بودجه‌ها</option>
+            <option value="low" {% if request.GET.cost == 'low' %}selected{% endif %}>کم</option>
+            <option value="medium" {% if request.GET.cost == 'medium' %}selected{% endif %}>متوسط</option>
+            <option value="high" {% if request.GET.cost == 'high' %}selected{% endif %}>زیاد</option>
+        </select>
+        <button type="submit" class="search-button">جستجو</button>
+    </form>
+</div>
+
+<div class="places-list">
+    {% if places %}
+        {% for place in places %}
+        <div class="place-card animate__animated animate__fadeInUp">
+            <a href="{% url 'place:place_detail' place.id %}" class="place-image">
+                {% if place.images.first %}
+                    <img src="{{ place.images.first.image.url }}" alt="{{ place.name }}">
+                {% else %}
+                    <img src="https://source.unsplash.com/400x200/?travel,place,nature" alt="مکان گردشگری">
+                {% endif %}
+            </a>
+            <div class="place-meta">
+                <span>{{ place.type }}</span>
+                <span class="dot"></span>
+                <span>{{ place.city }}</span>
+                <span class="dot"></span>
+                <span>{{ place.views }} بازدید</span>
+            </div>
+            <div class="place-title">{{ place.name }}</div>
+            <div class="place-desc">{{ place.description|truncatewords:20 }}</div>
+            <div class="place-footer">
+                <div class="place-info">
+                    <span class="score">{{ place.score }} امتیاز</span>
+                    <span class="budget">{{ place.get_Cost_display }}</span>
+                </div>
+                <a href="{% url 'place:place_detail' place.id %}" class="read-more">مشاهده</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-places">هیچ مکانی یافت نشد.</p>
+    {% endif %}
+</div>
+{% endblock %}
